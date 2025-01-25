@@ -1,6 +1,6 @@
 "use client";
 import { useRef } from "react";
-
+import Character from "./components/character";
 export default function Home() {
   const scrollRef = useRef(null);
 
@@ -26,8 +26,8 @@ export default function Home() {
 
       {/* Floor */}
       <section className="bg-green-600 h-[20vh] w-[170vw] flex-shrink-0">
-        {/* Person */}
-        <div className="bg-yellow-500 w-10 h-[200px] absolute bottom-16 left-[200px] ">Person</div>
+        {/* 👨 Person */}
+        <Character />
       </section>
     </main>
   );
