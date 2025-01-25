@@ -25,7 +25,10 @@ export default function Home() {
       </div>
 
       {/* Floor */}
-      <section className="bg-green-600 h-[20vh] w-[170vw] flex-shrink-0"></section>
+      <section className="bg-green-600 h-[20vh] w-[170vw] flex-shrink-0">
+        {/* Person */}
+        <div className="bg-yellow-500 w-10 h-[200px] absolute bottom-16 left-[200px] ">Person</div>
+      </section>
     </main>
   );
 }
