@@ -86,7 +86,7 @@ export default function Home() {
         />
 
         {/* Room 2 */}
-        <section className="bg-amber-50 h-full w-[1800px] flex-shrink-0 relative">
+        <section className="bg-amber-50 h-full w-[2200px] flex-shrink-0 relative">
           {/* 📝 Room Writing */}
           <div className="absolute top-1/3 left-[50px] max-w-xs shadow-md p-4">
             <h3 className="text-2xl font-bold mb-4">Pattern & Colors</h3>
@@ -126,6 +126,19 @@ export default function Home() {
               <div className="relative">
                 <Image
                   src="/images/room-2/artwork-2.png"
+                  alt="Habitat Gallery Logo"
+                  width={400}
+                  height={0}
+                />
+              </div>
+            </button>
+            <button
+              // onClick={onSignClick}
+              className=" drop-shadow-lg"
+            >
+              <div className="relative">
+                <Image
+                  src="/images/room-2/artwork-3.png"
                   alt="Habitat Gallery Logo"
                   width={400}
                   height={0}
