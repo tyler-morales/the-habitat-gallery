@@ -78,7 +78,11 @@ export default function Home() {
       {/* 🚪 Rooms  */}
       <div className="flex w-[170vw] h-[80vh] flex-shrink-0">
         {/* Room 1 */}
-        <EntryRoom onSignClick={moveCharacterToSign} ref={checkInRef} />
+        <EntryRoom
+          onSignClick={moveCharacterToSign}
+          ref={checkInRef}
+          setHasCheckedIn={setHasCheckedIn}
+        />
 
         {/* Room 2 */}
         <section className="bg-red-600 h-full w-[100vw] flex-shrink-0"></section>

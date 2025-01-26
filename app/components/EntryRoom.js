@@ -1,9 +1,10 @@
 import Image from "next/image";
 import React from "react";
 
-export default function EntryRoom({ onSignClick, ref }) {
+export default function EntryRoom({ onSignClick, ref, setHasCheckedIn }) {
   const checkIn = () => {
-    // Show the popover
+    setHasCheckedIn(true);
+
     if (ref.current) {
       ref.current.showModal();
     }
@@ -61,12 +62,12 @@ export default function EntryRoom({ onSignClick, ref }) {
       </div>
 
       {/* Check-in desk */}
-      <div
+      <button
         onClick={checkIn}
         className="w-[300px] h-[200px] border-4 absolute border-black bottom-[-100px] left-[200px] bg-white z-50"
       >
         Check in
-      </div>
+      </button>
       {/* Roman Pillar Decor */}
       <Image
         src={"/images/decor/pillar.png"}
