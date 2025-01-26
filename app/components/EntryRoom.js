@@ -28,7 +28,7 @@ export default function EntryRoom({ onSignClick }) {
       </button>
 
       {/* Desription */}
-      <div className="absolute p-4 max-w-[430px] shadow-lg right-[160px] top-[120px] flex gap-3 flex-col rounded-sm">
+      <div className="absolute p-4 max-w-[430px] shadow-lg right-[130px] top-[120px] flex gap-3 flex-col rounded-sm">
         <p>
           A digital extension of Habitat 2317, this interactive gallery brings the immersive
           experience of Tyler Morales’ apartment exhibitions into the virtual space. Blending
