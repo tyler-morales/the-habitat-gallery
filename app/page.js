@@ -88,7 +88,7 @@ export default function Home() {
         {/* Room 2 */}
         <section className="bg-amber-50 h-full w-[1800px] flex-shrink-0 relative">
           {/* 📝 Room Writing */}
-          <div className="absolute top-1/3 left-[50px] max-w-xs">
+          <div className="absolute top-1/3 left-[50px] max-w-xs shadow-md p-4">
             <h3 className="text-2xl font-bold mb-4">Pattern & Colors</h3>
             <p>
               A digital extension of Habitat 2317, this interactive gallery brings the immersive
@@ -102,7 +102,7 @@ export default function Home() {
           </div>
 
           {/* 🎨 Artworks */}
-          <div className="flex gap-16 absolute top-[100px] left-[450px]">
+          <div className="flex gap-20 absolute top-[100px] left-[450px]">
             <button
               // onClick={onSignClick}
               className="drop-shadow-lg"
