@@ -23,7 +23,16 @@ export default function EntryRoom({ onSignClick }) {
             height={0}
             className="absolute top-[170px] m-auto left-0 right-0"
           />
-          <h2 className="text-2xl absolute bottom-[90px] text-center w-full">A gallery space 🌎</h2>
+          <Image
+            src="https://wallpaperbat.com/img/501688-valley-wallpaper.jpg"
+            alt="Habitat Gallery Logo"
+            width={373}
+            height={0}
+            className="absolute left-[15px] bottom-[55px] z-[-1]"
+          />
+          <h2 className="text-2xl absolute bottom-[90px] text-center w-full text-white">
+            A gallery space 🌎
+          </h2>
         </div>
       </button>
 
@@ -42,6 +51,11 @@ export default function EntryRoom({ onSignClick }) {
           harmony, this digital space continues the legacy of intimate, thought-provoking showcases
           in a new, dynamic form.
         </p>
+      </div>
+
+      {/* Check-in desk */}
+      <div className="w-[300px] h-[200px] border-4 absolute border-black bottom-[-100px] left-[200px] bg-white z-50">
+        Check in
       </div>
     </section>
   );
