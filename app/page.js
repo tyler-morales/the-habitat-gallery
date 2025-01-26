@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import Character from "./components/character";
 import EntryRoom from "./components/EntryRoom";
 
@@ -9,23 +9,59 @@ export default function Home() {
   const [characterPosition, setCharacterPosition] = useState({ x: 50, y: 64 }); // Initial X position
   const [hasCheckedIn, setHasCheckedIn] = useState(false);
 
-  // Scroll Horizontally
-  const handleScroll = (event) => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollLeft += event.deltaY;
-    }
+  // Function to check if user has scrolled past the check-in desk
+  const updateScrollPosition = () => {
+    if (!scrollRef.current) return;
 
-    // Check if the user has scrolled to the check-in desk
     let x = scrollRef.current.scrollLeft;
-    if (x >= 115 && !hasCheckedIn) {
-      setHasCheckedIn(true); // Prevent multiple logs
 
-      // Show the popover
+    if (x >= 115 && !hasCheckedIn) {
+      console.log("✅ User has reached the check-in desk!");
+      setHasCheckedIn(true); // Prevent multiple pop-ups
+
+      // Show the pop-up
       if (checkInRef.current) {
         checkInRef.current.showModal();
       }
     }
   };
+
+  // Scroll Horizontally
+  const handleScroll = (event) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft += event.deltaY;
+    }
+  };
+
+  // Handle arrow key presses (← Left Arrow, → Right Arrow)
+  const handleKeyPress = (event) => {
+    if (!scrollRef.current) return;
+
+    if (event.key === "ArrowRight") {
+      scrollRef.current.scrollLeft += 20; // Adjust step size if needed
+    } else if (event.key === "ArrowLeft") {
+      scrollRef.current.scrollLeft -= 20;
+    }
+
+    requestAnimationFrame(updateScrollPosition); // Check if check-in should trigger
+  };
+
+  // Attach event listeners for both scroll & arrow key detection
+  useEffect(() => {
+    const handleScrollEvent = () => requestAnimationFrame(updateScrollPosition);
+
+    if (scrollRef.current) {
+      scrollRef.current.addEventListener("scroll", handleScrollEvent);
+    }
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      if (scrollRef.current) {
+        scrollRef.current.removeEventListener("scroll", handleScrollEvent);
+      }
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [hasCheckedIn]);
 
   // Move character towards the sign
   const moveCharacterToSign = () => {
