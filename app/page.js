@@ -86,11 +86,26 @@ export default function Home() {
         />
 
         {/* Room 2 */}
-        <section className="bg-amber-50 h-full w-[200vw] flex-shrink-0 relative">
-          <div className="flex gap-16 absolute top-[100px] left-[50px]">
+        <section className="bg-amber-50 h-full w-[1800px] flex-shrink-0 relative">
+          {/* 📝 Room Writing */}
+          <div className="absolute top-1/3 left-[50px] max-w-xs">
+            <h3 className="text-2xl font-bold mb-4">Pattern & Colors</h3>
+            <p>
+              A digital extension of Habitat 2317, this interactive gallery brings the immersive
+              experience of Tyler Morales’ apartment exhibitions into the virtual space.
+            </p>
+            <p className="mt-2">
+              Blending minimal design with skeuomorphic elements, Habitat Gallery allows visitors to
+              explore curated rooms, walk through evolving exhibitions, and engage with artworks as
+              if they were physically present.
+            </p>
+          </div>
+
+          {/* 🎨 Artworks */}
+          <div className="flex gap-16 absolute top-[100px] left-[450px]">
             <button
               // onClick={onSignClick}
-              className=" sm:top-[70px] top-[20px] drop-shadow-lg"
+              className="drop-shadow-lg"
             >
               <div className="relative">
                 <Image
@@ -100,14 +115,17 @@ export default function Home() {
                   height={0}
                 />
               </div>
+              {/* <div className="bg-teal-800 text-white w-min p-2 mt-4 rounded-sm">
+                <h3>Title:</h3>
+              </div> */}
             </button>
             <button
               // onClick={onSignClick}
-              className=" sm:top-[70px] top-[20px]  drop-shadow-lg"
+              className=" drop-shadow-lg"
             >
               <div className="relative">
                 <Image
-                  src="/images/room-2/artwork-1.png"
+                  src="/images/room-2/artwork-2.png"
                   alt="Habitat Gallery Logo"
                   width={400}
                   height={0}
