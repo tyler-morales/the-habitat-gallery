@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useRef, useEffect, useState } from "react";
 import Character from "./components/character";
 import EntryRoom from "./components/EntryRoom";
@@ -85,9 +86,38 @@ export default function Home() {
         />
 
         {/* Room 2 */}
-        <section className="bg-red-600 h-full w-[100vw] flex-shrink-0"></section>
-        {/* Room 2 */}
-        <section className="bg-red-600 h-full w-[100vw] flex-shrink-0"></section>
+        <section className="bg-amber-50 h-full w-[200vw] flex-shrink-0 relative">
+          <div className="flex gap-16 absolute top-[100px] left-[50px]">
+            <button
+              // onClick={onSignClick}
+              className=" sm:top-[70px] top-[20px] drop-shadow-lg"
+            >
+              <div className="relative">
+                <Image
+                  src="/images/room-2/artwork-1.png"
+                  alt="Habitat Gallery Logo"
+                  width={400}
+                  height={0}
+                />
+              </div>
+            </button>
+            <button
+              // onClick={onSignClick}
+              className=" sm:top-[70px] top-[20px]  drop-shadow-lg"
+            >
+              <div className="relative">
+                <Image
+                  src="/images/room-2/artwork-1.png"
+                  alt="Habitat Gallery Logo"
+                  width={400}
+                  height={0}
+                />
+              </div>
+            </button>
+          </div>
+        </section>
+        {/* Room 3 */}
+        <section className="bg-green-600 h-full w-[100vw] flex-shrink-0"></section>
       </div>
 
       {/* Floor */}
