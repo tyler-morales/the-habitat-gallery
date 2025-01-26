@@ -1,7 +1,14 @@
 import Image from "next/image";
 import React from "react";
 
-export default function EntryRoom({ onSignClick }) {
+export default function EntryRoom({ onSignClick, ref }) {
+  const checkIn = () => {
+    // Show the popover
+    if (ref.current) {
+      ref.current.showModal();
+    }
+  };
+
   return (
     <section className=" h-full w-[1100px] flex-shrink-0 relative">
       {/* Sign - Positioned Within Room */}
@@ -54,7 +61,10 @@ export default function EntryRoom({ onSignClick }) {
       </div>
 
       {/* Check-in desk */}
-      <div className="w-[300px] h-[200px] border-4 absolute border-black bottom-[-100px] left-[200px] bg-white z-50">
+      <div
+        onClick={checkIn}
+        className="w-[300px] h-[200px] border-4 absolute border-black bottom-[-100px] left-[200px] bg-white z-50"
+      >
         Check in
       </div>
       {/* Roman Pillar Decor */}
