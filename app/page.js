@@ -145,6 +145,19 @@ export default function Home() {
                 />
               </div>
             </button>
+            <button
+              // onClick={onSignClick}
+              className=" drop-shadow-lg"
+            >
+              <div className="relative">
+                <Image
+                  src="/images/room-2/artwork-4.png"
+                  alt="Habitat Gallery Logo"
+                  width={370}
+                  height={0}
+                />
+              </div>
+            </button>
           </div>
         </section>
         {/* Room 3 */}
