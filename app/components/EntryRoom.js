@@ -57,6 +57,14 @@ export default function EntryRoom({ onSignClick }) {
       <div className="w-[300px] h-[200px] border-4 absolute border-black bottom-[-100px] left-[200px] bg-white z-50">
         Check in
       </div>
+      {/* Roman Pillar Decor */}
+      <Image
+        src={"/images/decor/pillar.png"}
+        className="absolute bottom-[-80px] right-[200px] z-50 drop-shadow-lg"
+        alt="Room 1"
+        width={100}
+        height={0}
+      />
     </section>
   );
 }
