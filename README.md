@@ -20,4 +20,9 @@ bun dev
 [ ] Check-in
 [ ] Add more decor to rooms
 [ ] Make Habitat frame an autoplay slideshow
-[ ] Add a 3rd room
+[x] Add a 3rd room
+[ ] Add a HUD forf settings, ticket (This is where the fun is)
+[ ] Ticket
+[ ] Map
+[ ] Settings
+[ ] About

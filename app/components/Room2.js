@@ -111,7 +111,7 @@ export default function Room2() {
       <AnimatePresence>
         {isPopupVisible && selectedArtwork && (
           <motion.div
-            className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 overflow-y-scroll border-4 border-orange-700"
+            className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 overflow-y-scroll"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1, y: "0" }}
             exit={{ opacity: 0 }}
