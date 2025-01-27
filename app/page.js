@@ -5,6 +5,7 @@ import Character from "./components/character";
 import EntryRoom from "./components/EntryRoom";
 import CheckInModal from "./components/CheckInModal";
 import Room1 from "./components/Room1";
+import Room2 from "./components/Room2";
 
 export default function Home() {
   const scrollRef = useRef(null);
@@ -90,7 +91,7 @@ export default function Home() {
         <Room1 />
 
         {/* Room 3 */}
-        <section className="bg-green-600 h-full w-[100vw] flex-shrink-0"></section>
+        <Room2 />
       </div>
 
       {/* Floor */}
