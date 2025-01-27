@@ -4,12 +4,13 @@ import { useRef, useEffect, useState } from "react";
 import Character from "./components/character";
 import EntryRoom from "./components/EntryRoom";
 import CheckInModal from "./components/CheckInModal";
+import Room1 from "./components/Room1";
 
 export default function Home() {
   const scrollRef = useRef(null);
   const checkInRef = useRef(null); // Ref for the dialog popover
   const [characterPosition, setCharacterPosition] = useState({ x: 50, y: 64 }); // Initial X position
-  const [hasCheckedIn, setHasCheckedIn] = useState(false);
+  const [hasCheckedIn, setHasCheckedIn] = useState(true);
 
   // Function to check if user has scrolled past the check-in desk
   const updateScrollPosition = () => {
@@ -86,80 +87,8 @@ export default function Home() {
         />
 
         {/* Room 2 */}
-        <section className="bg-amber-50 h-full w-[2200px] flex-shrink-0 relative">
-          {/* 📝 Room Writing */}
-          <div className="absolute top-1/3 left-[50px] max-w-xs shadow-md p-4">
-            <h3 className="text-2xl font-bold mb-4">Pattern & Colors</h3>
-            <p>
-              A digital extension of Habitat 2317, this interactive gallery brings the immersive
-              experience of Tyler Morales’ apartment exhibitions into the virtual space.
-            </p>
-            <p className="mt-2">
-              Blending minimal design with skeuomorphic elements, Habitat Gallery allows visitors to
-              explore curated rooms, walk through evolving exhibitions, and engage with artworks as
-              if they were physically present.
-            </p>
-          </div>
+        <Room1 />
 
-          {/* 🎨 Artworks */}
-          <div className="flex gap-20 absolute top-[100px] left-[450px]">
-            <button
-              // onClick={onSignClick}
-              className="drop-shadow-lg"
-            >
-              <div className="relative">
-                <Image
-                  src="/images/room-2/artwork-1.png"
-                  alt="Habitat Gallery Logo"
-                  width={400}
-                  height={0}
-                />
-              </div>
-              {/* <div className="bg-teal-800 text-white w-min p-2 mt-4 rounded-sm">
-                <h3>Title:</h3>
-              </div> */}
-            </button>
-            <button
-              // onClick={onSignClick}
-              className=" drop-shadow-lg"
-            >
-              <div className="relative">
-                <Image
-                  src="/images/room-2/artwork-2.png"
-                  alt="Habitat Gallery Logo"
-                  width={400}
-                  height={0}
-                />
-              </div>
-            </button>
-            <button
-              // onClick={onSignClick}
-              className=" drop-shadow-lg"
-            >
-              <div className="relative">
-                <Image
-                  src="/images/room-2/artwork-3.png"
-                  alt="Habitat Gallery Logo"
-                  width={400}
-                  height={0}
-                />
-              </div>
-            </button>
-            <button
-              // onClick={onSignClick}
-              className=" drop-shadow-lg"
-            >
-              <div className="relative">
-                <Image
-                  src="/images/room-2/artwork-4.png"
-                  alt="Habitat Gallery Logo"
-                  width={370}
-                  height={0}
-                />
-              </div>
-            </button>
-          </div>
-        </section>
         {/* Room 3 */}
         <section className="bg-green-600 h-full w-[100vw] flex-shrink-0"></section>
       </div>

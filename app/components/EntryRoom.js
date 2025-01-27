@@ -11,7 +11,7 @@ export default function EntryRoom({ onSignClick, ref, setHasCheckedIn }) {
   };
 
   return (
-    <section className=" h-full w-[1100px] flex-shrink-0 relative">
+    <section className="bg-slate-100 h-full w-[1100px] flex-shrink-0 relative">
       {/* Sign - Positioned Within Room */}
       <button
         onClick={onSignClick}
@@ -45,7 +45,7 @@ export default function EntryRoom({ onSignClick, ref, setHasCheckedIn }) {
       </button>
 
       {/* Desription */}
-      <div className="absolute p-4 max-w-[430px] shadow-lg right-[130px] top-[120px] flex gap-3 flex-col rounded-sm">
+      <div className="bg-white absolute p-4 max-w-[430px] shadow-lg right-[130px] top-[120px] flex gap-3 flex-col rounded-sm">
         <p>
           A digital extension of Habitat 2317, this interactive gallery brings the immersive
           experience of Tyler Morales’ apartment exhibitions into the virtual space. Blending
