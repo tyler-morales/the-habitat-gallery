@@ -8,5 +8,5 @@ code: 1,1,1,1
 TOTAL: 4
 
 1/26/25
-code: 1,1,1
-TOTAL: \_
+code: 1,1,1,1,.6
+TOTAL: 4.6

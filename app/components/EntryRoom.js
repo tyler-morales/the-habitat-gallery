@@ -63,9 +63,9 @@ export default function EntryRoom({ onSignClick, ref, setHasCheckedIn }) {
       {/* Check-in desk */}
       <button
         onClick={checkIn}
-        className="w-[300px] h-[200px] border-4 absolute border-black bottom-[-100px] left-[300px] bg-white z-50"
+        className="w-[300px] h-[200px] absolute bottom-[-100px] left-[300px] bg-black text-white z-50"
       >
-        Check in
+        <span> Check in</span>
       </button>
       {/* Roman Pillar Decor */}
       <Image
