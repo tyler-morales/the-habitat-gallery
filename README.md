@@ -13,3 +13,11 @@ pnpm dev
 # or
 bun dev
 ```
+
+## TODO
+
+[ ] Create character
+[ ] Check-in
+[ ] Add more decor to rooms
+[ ] Make Habitat frame an autoplay slideshow
+[ ] Add a 3rd room
