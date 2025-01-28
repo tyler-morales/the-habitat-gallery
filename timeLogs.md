@@ -12,6 +12,6 @@ code: 1,1,1,1,.6
 TOTAL: 4.6
 
 1/27/25
-plan: .6
-code: .3,1,1,1
-TOTAL: 4
+plan: .66
+code: .33,1,1,1,1
+TOTAL: 5

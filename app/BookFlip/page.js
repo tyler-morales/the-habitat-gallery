@@ -1,80 +1,109 @@
 "use client";
 import { useState, useEffect } from "react";
-const entries = [
+const data = [
   { date: "1/27/25", name: "1. Homer Simpson", message: "Mmm... art. Almost as good as donuts!" },
   { date: "1/27/25", name: "2. Darth Vader", message: "Impressive. Most impressive." },
-  {
-    date: "1/27/25",
-    name: "3. Tony Stark",
-    message: "This place has class... almost as much as me.",
-  },
-  { date: "1/27/25", name: "4. Yoda", message: "Great gallery, this is. Inspired, I am." },
-  { date: "1/27/25", name: "5. Deadpool", message: "10/10 would break the fourth wall again!" },
-  { date: "1/27/25", name: "6. Sherlock Holmes", message: "Elementary, my dear artist." },
-  {
-    date: "1/27/25",
-    name: "7. Walter White",
-    message: "You're goddamn right this art is amazing.",
-  },
-  { date: "1/27/25", name: "8. Patrick Star", message: "Is mayonnaise an art?" },
-  { date: "1/27/25", name: "9. The Joker", message: "Why so... artistic?" },
-  {
-    date: "1/27/25",
-    name: "10. Frodo Baggins",
-    message: "One does not simply walk past this gallery!",
-  },
-  {
-    date: "1/27/25",
-    name: "11. Michael Scott",
-    message:
-      "Would I rather be feared or loved? Easy. I want people to love my art while fearing its brilliance.",
-  },
-  {
-    date: "1/27/25",
-    name: "12. Gandalf",
-    message:
-      "A wizard is never late to an art exhibition, nor is he early. He arrives precisely when he means to!",
-  },
-  {
-    date: "1/27/25",
-    name: "13. Bugs Bunny",
-    message: "Ehh... what’s up with all this beautiful art, doc?",
-  },
-  {
-    date: "1/27/25",
-    name: "14. Marty McFly",
-    message: "Great Scott! This art belongs in the future!",
-  },
-  {
-    date: "1/27/25",
-    name: "15. Spock",
-    message: "Fascinating. The logic of these compositions is unparalleled.",
-  },
-  {
-    date: "1/27/25",
-    name: "16. Jack Sparrow",
-    message: "This gallery needs more rum... but otherwise, I approve.",
-  },
-  { date: "1/27/25", name: "17. Mario", message: "It’s-a me, Mario! And I-a love-a this art!" },
-  { date: "1/27/25", name: "18. The Mandalorian", message: "This is the way... to great art." },
-  {
-    date: "1/27/25",
-    name: "19. Thanos",
-    message: "Perfectly balanced, as all great art should be.",
-  },
-  {
-    date: "1/27/25",
-    name: "20. Bob Ross",
-    message: "There are no mistakes, only happy little brushstrokes.",
-  },
+  // {
+  //   date: "1/27/25",
+  //   name: "3. Tony Stark",
+  //   message: "This place has class... almost as much as me.",
+  // },
+  // { date: "1/27/25", name: "4. Yoda", message: "Great gallery, this is. Inspired, I am." },
+  // { date: "1/27/25", name: "5. Deadpool", message: "10/10 would break the fourth wall again!" },
+  // { date: "1/27/25", name: "6. Sherlock Holmes", message: "Elementary, my dear artist." },
+  // {
+  //   date: "1/27/25",
+  //   name: "7. Walter White",
+  //   message: "You're goddamn right this art is amazing.",
+  // },
+  // { date: "1/27/25", name: "8. Patrick Star", message: "Is mayonnaise an art?" },
+  // { date: "1/27/25", name: "9. The Joker", message: "Why so... artistic?" },
+  // {
+  //   date: "1/27/25",
+  //   name: "10. Frodo Baggins",
+  //   message: "One does not simply walk past this gallery!",
+  // },
+  // {
+  //   date: "1/27/25",
+  //   name: "11. Michael Scott",
+  //   message:
+  //     "Would I rather be feared or loved? Easy. I want people to love my art while fearing its brilliance.",
+  // },
+  // {
+  //   date: "1/27/25",
+  //   name: "12. Gandalf",
+  //   message:
+  //     "A wizard is never late to an art exhibition, nor is he early. He arrives precisely when he means to!",
+  // },
+  // {
+  //   date: "1/27/25",
+  //   name: "13. Bugs Bunny",
+  //   message: "Ehh... what’s up with all this beautiful art, doc?",
+  // },
+  // {
+  //   date: "1/27/25",
+  //   name: "14. Marty McFly",
+  //   message: "Great Scott! This art belongs in the future!",
+  // },
+  // {
+  //   date: "1/27/25",
+  //   name: "15. Spock",
+  //   message: "Fascinating. The logic of these compositions is unparalleled.",
+  // },
+  // {
+  //   date: "1/27/25",
+  //   name: "16. Jack Sparrow",
+  //   message: "This gallery needs more rum... but otherwise, I approve.",
+  // },
+  // { date: "1/27/25", name: "17. Mario", message: "It’s-a me, Mario! And I-a love-a this art!" },
+  // { date: "1/27/25", name: "18. The Mandalorian", message: "This is the way... to great art." },
+  // {
+  //   date: "1/27/25",
+  //   name: "19. Thanos",
+  //   message: "Perfectly balanced, as all great art should be.",
+  // },
+  // {
+  //   date: "1/27/25",
+  //   name: "20. Bob Ross",
+  //   message: "There are no mistakes, only happy little brushstrokes.",
+  // },
 ];
 
 export default function FlipBook() {
   const [page, setPage] = useState(1);
-  const entriesPerPage = 4;
+  const [entries, setEntries] = useState(data);
+  const entriesPerPage = 5;
   const [isSinglePage, setIsSinglePage] = useState(false);
+  const [newEntry, setNewEntry] = useState({
+    date: new Date().toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }),
+    name: "",
+    message: "",
+  });
+
+  const handleInputChange = (e, field) => {
+    const value = e.target.value;
+
+    // Update the local state for the form input
+    setNewEntry((prev) => ({ ...prev, [field]: value }));
+
+    // Ensure we're updating the last entry in `entries`
+    setEntries((prevEntries) => {
+      // if (prevEntries.length === 0) return [{ ...newEntry, [field]: value }];
+
+      return prevEntries.map((entry, index) =>
+        index === prevEntries.length - 1 ? { ...entry, [field]: value } : entry
+      );
+    });
+  };
+
+  console.log(entries);
 
   useEffect(() => {
+    setEntries([...entries, newEntry]);
     const updateScreenSize = () => {
       setIsSinglePage(window.innerWidth < 1000);
     };
@@ -84,9 +113,10 @@ export default function FlipBook() {
   }, []);
 
   const paginatedEntries = [];
-  for (let i = -4; i < entries.length; i += entriesPerPage) {
+  for (let i = -5; i < entries.length; i += entriesPerPage) {
     paginatedEntries.push(entries.slice(i, i + entriesPerPage));
   }
+  console.log(paginatedEntries);
 
   const nextPage = () => {
     setPage((prev) => {
@@ -119,14 +149,14 @@ export default function FlipBook() {
     <div className="flex flex-col items-center">
       {/* Cover */}
       {page === 1 && (
-        <div
+        <button
           onClick={nextPage}
           className="leather w-full max-w-[500px] aspect-[3/4] bg-amber-950 cursor-pointer rounded-r-2xl shadow-2xl drop-shadow-xl"
         >
           <div className="p-8">
             <h1 className="text-white text-2xl font-bold">Guestbook</h1>
           </div>
-        </div>
+        </button>
       )}
 
       {page > 1 && (
@@ -146,13 +176,38 @@ export default function FlipBook() {
             </h2>
             {page == 2 && <div className="border-2 p-2 m-2 h-[90%]">hello</div>}
             {page > 2 &&
-              paginatedEntries[page - 2]?.map((entry, index) => (
+              paginatedEntries[page - 2]?.slice(0, -1)?.map((entry, index) => (
                 <div key={index} className="border-2 p-2 m-2">
                   <p className="text-sm">{entry.date}</p>
                   <p className="font-bold">{entry.name}</p>
                   <p className="text-sm">{entry.message}</p>
                 </div>
               ))}
+            {page > 2 && (
+              <form className="border-2 p-2 m-2">
+                <p className="text-sm">
+                  {new Date().toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={newEntry.name}
+                  onChange={(e) => handleInputChange(e, "name")}
+                  className="font-bold block w-full"
+                />
+                <textarea
+                  type="text"
+                  placeholder="Message"
+                  value={newEntry.message}
+                  onChange={(e) => handleInputChange(e, "message")}
+                  className=" text-sm w-full"
+                />
+              </form>
+            )}
             {/* Click Box to go back */}
             <span
               onClick={prevPage}
@@ -176,13 +231,38 @@ export default function FlipBook() {
             className="relative rounded-r-lg bg-yellow-100 w-full my-6 p-2 mr-6 @max-[1000px]:hidden"
           >
             <h2 className="text-lg font-bold text-center">Page {page}</h2>
-            {paginatedEntries[page - 1]?.map((entry, index) => (
+            {paginatedEntries[page - 1]?.slice(0, -1).map((entry, index) => (
               <div key={index} className="border-2 p-2 m-2">
-                <p className="text-sm">{entry.date}</p>
-                <p className="font-bold">{entry.name}</p>
-                <p className="text-sm">{entry.message}</p>
+                <p className="text-sm">{entry?.date}</p>
+                <p className="font-bold">{entry?.name}</p>
+                <p className="text-sm">{entry?.message}</p>
               </div>
             ))}
+
+            {/* Check in a guest Form */}
+            <form className="border-2 p-2 m-2">
+              <p className="text-sm">
+                {new Date().toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+              <input
+                type="text"
+                placeholder="Your Name"
+                value={newEntry.name}
+                onChange={(e) => handleInputChange(e, "name")}
+                className="font-bold block w-full"
+              />
+              <textarea
+                type="text"
+                placeholder="Message"
+                value={newEntry.message}
+                onChange={(e) => handleInputChange(e, "message")}
+                className=" text-sm w-full"
+              />
+            </form>
             {/* Click Box to go forward */}
             <span
               onClick={nextPage}
