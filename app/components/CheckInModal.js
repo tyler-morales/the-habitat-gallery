@@ -1,15 +1,18 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
+import GuestBook from "./GuestBook";
 
 export default function CheckInModal({ checkInRef }) {
+  const [flippedPages, setFlippedPages] = useState([]);
+
   return (
-    <dialog ref={checkInRef} className="p-6 bg-white shadow-lg rounded-md">
-      <h2 className="text-xl font-bold mb-2">Welcome to the Check-In Desk!</h2>
-      <p className="mb-4">Would you like to sign the guestbook?</p>
+    <dialog ref={checkInRef} className="w-[80vw] m-auto relative rounded-3xl">
+      <GuestBook />
       <button
         onClick={() => checkInRef.current.close()}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
+        className="p-2 text-gray-500 hover:text-gray-800 text-lg absolute top-0 right-2 transition-all cursor-pointer"
       >
-        Close
+        x
       </button>
     </dialog>
   );

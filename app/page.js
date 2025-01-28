@@ -6,6 +6,7 @@ import EntryRoom from "./components/EntryRoom";
 import CheckInModal from "./components/CheckInModal";
 import Room1 from "./components/Room1";
 import Room2 from "./components/Room2";
+import GuestBook from "./components/GuestBook";
 
 export default function Home() {
   const scrollRef = useRef(null);
@@ -101,6 +102,7 @@ export default function Home() {
       <Character position={characterPosition} />
 
       {/* 🏁 Check-in Popover (Native Dialog) */}
+      {/* <GuestBook checkInRef={checkInRef} /> */}
       <CheckInModal checkInRef={checkInRef} />
     </main>
   );
