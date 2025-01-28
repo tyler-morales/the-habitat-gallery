@@ -1,72 +1,73 @@
 "use client";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 const data = [
   { date: "1/27/25", name: "1. Homer Simpson", message: "Mmm... art. Almost as good as donuts!" },
   { date: "1/27/25", name: "2. Darth Vader", message: "Impressive. Most impressive." },
-  // {
-  //   date: "1/27/25",
-  //   name: "3. Tony Stark",
-  //   message: "This place has class... almost as much as me.",
-  // },
-  // { date: "1/27/25", name: "4. Yoda", message: "Great gallery, this is. Inspired, I am." },
-  // { date: "1/27/25", name: "5. Deadpool", message: "10/10 would break the fourth wall again!" },
-  // { date: "1/27/25", name: "6. Sherlock Holmes", message: "Elementary, my dear artist." },
-  // {
-  //   date: "1/27/25",
-  //   name: "7. Walter White",
-  //   message: "You're goddamn right this art is amazing.",
-  // },
-  // { date: "1/27/25", name: "8. Patrick Star", message: "Is mayonnaise an art?" },
-  // { date: "1/27/25", name: "9. The Joker", message: "Why so... artistic?" },
-  // {
-  //   date: "1/27/25",
-  //   name: "10. Frodo Baggins",
-  //   message: "One does not simply walk past this gallery!",
-  // },
-  // {
-  //   date: "1/27/25",
-  //   name: "11. Michael Scott",
-  //   message:
-  //     "Would I rather be feared or loved? Easy. I want people to love my art while fearing its brilliance.",
-  // },
-  // {
-  //   date: "1/27/25",
-  //   name: "12. Gandalf",
-  //   message:
-  //     "A wizard is never late to an art exhibition, nor is he early. He arrives precisely when he means to!",
-  // },
-  // {
-  //   date: "1/27/25",
-  //   name: "13. Bugs Bunny",
-  //   message: "Ehh... what’s up with all this beautiful art, doc?",
-  // },
-  // {
-  //   date: "1/27/25",
-  //   name: "14. Marty McFly",
-  //   message: "Great Scott! This art belongs in the future!",
-  // },
-  // {
-  //   date: "1/27/25",
-  //   name: "15. Spock",
-  //   message: "Fascinating. The logic of these compositions is unparalleled.",
-  // },
-  // {
-  //   date: "1/27/25",
-  //   name: "16. Jack Sparrow",
-  //   message: "This gallery needs more rum... but otherwise, I approve.",
-  // },
-  // { date: "1/27/25", name: "17. Mario", message: "It’s-a me, Mario! And I-a love-a this art!" },
-  // { date: "1/27/25", name: "18. The Mandalorian", message: "This is the way... to great art." },
-  // {
-  //   date: "1/27/25",
-  //   name: "19. Thanos",
-  //   message: "Perfectly balanced, as all great art should be.",
-  // },
-  // {
-  //   date: "1/27/25",
-  //   name: "20. Bob Ross",
-  //   message: "There are no mistakes, only happy little brushstrokes.",
-  // },
+  {
+    date: "1/27/25",
+    name: "3. Tony Stark",
+    message: "This place has class... almost as much as me.",
+  },
+  { date: "1/27/25", name: "4. Yoda", message: "Great gallery, this is. Inspired, I am." },
+  { date: "1/27/25", name: "5. Deadpool", message: "10/10 would break the fourth wall again!" },
+  { date: "1/27/25", name: "6. Sherlock Holmes", message: "Elementary, my dear artist." },
+  {
+    date: "1/27/25",
+    name: "7. Walter White",
+    message: "You're goddamn right this art is amazing.",
+  },
+  { date: "1/27/25", name: "8. Patrick Star", message: "Is mayonnaise an art?" },
+  { date: "1/27/25", name: "9. The Joker", message: "Why so... artistic?" },
+  {
+    date: "1/27/25",
+    name: "10. Frodo Baggins",
+    message: "One does not simply walk past this gallery!",
+  },
+  {
+    date: "1/27/25",
+    name: "11. Michael Scott",
+    message:
+      "Would I rather be feared or loved? Easy. I want people to love my art while fearing its brilliance.",
+  },
+  {
+    date: "1/27/25",
+    name: "12. Gandalf",
+    message:
+      "A wizard is never late to an art exhibition, nor is he early. He arrives precisely when he means to!",
+  },
+  {
+    date: "1/27/25",
+    name: "13. Bugs Bunny",
+    message: "Ehh... what’s up with all this beautiful art, doc?",
+  },
+  {
+    date: "1/27/25",
+    name: "14. Marty McFly",
+    message: "Great Scott! This art belongs in the future!",
+  },
+  {
+    date: "1/27/25",
+    name: "15. Spock",
+    message: "Fascinating. The logic of these compositions is unparalleled.",
+  },
+  {
+    date: "1/27/25",
+    name: "16. Jack Sparrow",
+    message: "This gallery needs more rum... but otherwise, I approve.",
+  },
+  { date: "1/27/25", name: "17. Mario", message: "It’s-a me, Mario! And I-a love-a this art!" },
+  { date: "1/27/25", name: "18. The Mandalorian", message: "This is the way... to great art." },
+  {
+    date: "1/27/25",
+    name: "19. Thanos",
+    message: "Perfectly balanced, as all great art should be.",
+  },
+  {
+    date: "1/27/25",
+    name: "20. Bob Ross",
+    message: "There are no mistakes, only happy little brushstrokes.",
+  },
 ];
 
 export default function FlipBook() {
@@ -100,8 +101,6 @@ export default function FlipBook() {
     });
   };
 
-  console.log(entries);
-
   useEffect(() => {
     setEntries([...entries, newEntry]);
     const updateScreenSize = () => {
@@ -116,7 +115,6 @@ export default function FlipBook() {
   for (let i = -5; i < entries.length; i += entriesPerPage) {
     paginatedEntries.push(entries.slice(i, i + entriesPerPage));
   }
-  console.log(paginatedEntries);
 
   const nextPage = () => {
     setPage((prev) => {
@@ -146,7 +144,7 @@ export default function FlipBook() {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center justify-center h-[100vh]">
       {/* Cover */}
       {page === 1 && (
         <button
@@ -169,21 +167,21 @@ export default function FlipBook() {
               }/images/textures/paper.png)`,
               boxShadow: "5px 3px 5px black",
             }}
-            className="relative rounded-l-lg @max-[1000px]:rounded-r-lg bg-yellow-100 w-full my-6 p-2 ml-6 @max-[1000px]:mr-6  drop-shadow-[5px_0px_5px_rgba(0,0,0,.01)] z-10"
+            className="relative rounded-l-lg @max-[1000px]:rounded-r-lg bg-yellow-100 w-full my-6 p-2 ml-6 @max-[1000px]:mr-6 drop-shadow-[10px_0px_5px_rgba(50,50,50,.1)] z-10"
           >
             <h2 className="text-lg font-bold text-center">
               {page > 2 ? `Page ${page - 1}` : `Guest book ${page}`}
             </h2>
             {page == 2 && <div className="border-2 p-2 m-2 h-[90%]">hello</div>}
             {page > 2 &&
-              paginatedEntries[page - 2]?.slice(0, -1)?.map((entry, index) => (
+              paginatedEntries[page - 2]?.map((entry, index) => (
                 <div key={index} className="border-2 p-2 m-2">
                   <p className="text-sm">{entry.date}</p>
                   <p className="font-bold">{entry.name}</p>
                   <p className="text-sm">{entry.message}</p>
                 </div>
               ))}
-            {page > 2 && page == paginatedEntries.length - 1 && (
+            {isSinglePage && page > 2 && (
               <form className="border-2 p-2 m-2">
                 <p className="text-sm">
                   {new Date().toLocaleDateString("en-US", {
@@ -231,13 +229,23 @@ export default function FlipBook() {
             className="relative rounded-r-lg bg-yellow-100 w-full my-6 p-2 mr-6 @max-[1000px]:hidden"
           >
             <h2 className="text-lg font-bold text-center">Page {page}</h2>
-            {paginatedEntries[page - 1]?.slice(0, -1).map((entry, index) => (
+            {paginatedEntries[page - 1]?.map((entry, index) => (
               <div key={index} className="border-2 p-2 m-2">
                 <p className="text-sm">{entry?.date}</p>
                 <p className="font-bold">{entry?.name}</p>
                 <p className="text-sm">{entry?.message}</p>
               </div>
             ))}
+
+            {paginatedEntries[page - 1] === paginatedEntries.length &&
+              paginatedEntries[page - 1].slice(paginatedEntries.length)?.map((entry, index) => (
+                <div key={index} className="border-2 p-2 m-2">
+                  TEST
+                  <p className="text-sm">{entry?.date}</p>
+                  <p className="font-bold">{entry?.name}</p>
+                  <p className="text-sm">{entry?.message}</p>
+                </div>
+              ))}
 
             {/* Check in a guest Form */}
             {page == paginatedEntries.length && (
