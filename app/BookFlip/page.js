@@ -72,8 +72,7 @@ const data = [
 
 export default function FlipBook() {
   const [page, setPage] = useState(1);
-  const [entries, setEntries] = useState(data);
-  const entriesPerPage = 5;
+  const [paginatedEntries, setPaginatedEntries] = useState();
   const [isSinglePage, setIsSinglePage] = useState(false);
   const [newEntry, setNewEntry] = useState({
     date: new Date().toLocaleDateString("en-US", {
@@ -87,34 +86,46 @@ export default function FlipBook() {
 
   const handleInputChange = (e, field) => {
     const value = e.target.value;
-
-    // Update the local state for the form input
     setNewEntry((prev) => ({ ...prev, [field]: value }));
 
-    // Ensure we're updating the last entry in `entries`
-    setEntries((prevEntries) => {
-      // if (prevEntries.length === 0) return [{ ...newEntry, [field]: value }];
-
-      return prevEntries.map((entry, index) =>
-        index === prevEntries.length - 1 ? { ...entry, [field]: value } : entry
+    setPaginatedEntries((prevPaginated) => {
+      return prevPaginated.map((page, pageIndex) =>
+        pageIndex === prevPaginated.length - 1
+          ? [...page.slice(0, -1), { ...page[page.length - 1], [field]: value }]
+          : page
       );
     });
   };
 
   useEffect(() => {
-    setEntries([...entries, newEntry]);
+    const paginateData = (data, pageSize = 5) => {
+      const result = [];
+      for (let i = 0; i < data.length; i += pageSize) {
+        result.push(data.slice(i, i + pageSize));
+      }
+
+      // Append newEntry while respecting the pageSize limit
+      if (result.length > 0 && result[result.length - 1].length < pageSize) {
+        // If the last array has space, add newEntry to it
+        result[result.length - 1].push(newEntry);
+      } else {
+        // Otherwise, create a new array for newEntry
+        result.push([newEntry]);
+      }
+
+      return result;
+    };
+
+    setPaginatedEntries(paginateData(data));
     const updateScreenSize = () => {
-      setIsSinglePage(window.innerWidth < 1000);
+      setIsSinglePage(window.innerWidth < 800);
     };
     updateScreenSize();
     window.addEventListener("resize", updateScreenSize);
     return () => window.removeEventListener("resize", updateScreenSize);
   }, []);
 
-  const paginatedEntries = [];
-  for (let i = -5; i < entries.length; i += entriesPerPage) {
-    paginatedEntries.push(entries.slice(i, i + entriesPerPage));
-  }
+  console.log(paginatedEntries);
 
   const nextPage = () => {
     setPage((prev) => {
@@ -142,6 +153,7 @@ export default function FlipBook() {
       return isSinglePage ? prev - 1 : prev - 2;
     });
   };
+  console.log(page);
 
   return (
     <div className="flex flex-col items-center justify-center h-[100vh]">
@@ -158,7 +170,7 @@ export default function FlipBook() {
       )}
 
       {page > 1 && (
-        <div className="leather w-full max-w-[1000px] aspect-[4/3] bg-amber-950 flex rounded-lg @container drop-shadow-xl">
+        <div className="leather w-full max-w-[800px] aspect-[4/3] bg-amber-950 flex rounded-lg @container drop-shadow-xl">
           {/* Left Page */}
           <div
             style={{
@@ -167,29 +179,22 @@ export default function FlipBook() {
               }/images/textures/paper.png)`,
               boxShadow: "5px 3px 5px black",
             }}
-            className="relative rounded-l-lg @max-[1000px]:rounded-r-lg bg-yellow-100 w-full my-6 p-2 ml-6 @max-[1000px]:mr-6 drop-shadow-[10px_0px_5px_rgba(50,50,50,.1)] z-10"
+            className="relative rounded-l-lg @max-[800px]:rounded-r-lg bg-yellow-100 w-full my-6 p-2 ml-6 @max-[800px]:mr-6 drop-shadow-[10px_0px_5px_rgba(50,50,50,.1)] z-10"
           >
-            <h2 className="text-lg font-bold text-center">
-              {page > 2 ? `Page ${page - 1}` : `Guest book ${page}`}
-            </h2>
-            {page == 2 && <div className="border-2 p-2 m-2 h-[90%]">hello</div>}
-            {page > 2 &&
+            <h2 className="text-lg font-bold text-center">Page {page - 1}</h2>
+            {page > 1 &&
+              page - 1 != paginatedEntries.length &&
               paginatedEntries[page - 2]?.map((entry, index) => (
-                <div key={index} className="border-2 p-2 m-2">
+                <div key={index} className="font-serif border-b-2 border-orange-950 p-2 m-2">
                   <p className="text-sm">{entry.date}</p>
                   <p className="font-bold">{entry.name}</p>
                   <p className="text-sm">{entry.message}</p>
                 </div>
               ))}
-            {isSinglePage && page > 2 && (
-              <form className="border-2 p-2 m-2">
-                <p className="text-sm">
-                  {new Date().toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
+            {/* Form only on the last page */}
+            {page - 1 === paginatedEntries.length && (
+              <form className="font-serif border-b-2 border-orange-950 p-2 m-2">
+                <p className="text-sm">{newEntry.date}</p>
                 <input
                   type="text"
                   placeholder="Your Name"
@@ -202,7 +207,7 @@ export default function FlipBook() {
                   placeholder="Message"
                   value={newEntry.message}
                   onChange={(e) => handleInputChange(e, "message")}
-                  className=" text-sm w-full"
+                  className="text-sm w-full h-max"
                 />
               </form>
             )}
@@ -214,7 +219,7 @@ export default function FlipBook() {
             {/* Click Box to go forward */}
             <span
               onClick={nextPage}
-              className="absolute right-0 top-0 w-[20px] h-full bg-red-400 opacity-0 cursor-pointer @min-[1000px]:hidden"
+              className="absolute right-0 top-0 w-[20px] h-full bg-red-400 opacity-0 cursor-pointer @min-[800px]:hidden"
             ></span>
           </div>
 
@@ -226,37 +231,21 @@ export default function FlipBook() {
               }/images/textures/paper.png)`,
               boxShadow: "5px 3px 5px black",
             }}
-            className="relative rounded-r-lg bg-yellow-100 w-full my-6 p-2 mr-6 @max-[1000px]:hidden"
+            className="relative rounded-r-lg bg-yellow-100 w-full my-6 p-2 mr-6 @max-[800px]:hidden"
           >
             <h2 className="text-lg font-bold text-center">Page {page}</h2>
             {paginatedEntries[page - 1]?.map((entry, index) => (
-              <div key={index} className="border-2 p-2 m-2">
+              <div key={index} className="font-serif border-b-2 border-orange-950 p-2 m-2">
                 <p className="text-sm">{entry?.date}</p>
                 <p className="font-bold">{entry?.name}</p>
                 <p className="text-sm">{entry?.message}</p>
               </div>
             ))}
 
-            {paginatedEntries[page - 1] === paginatedEntries.length &&
-              paginatedEntries[page - 1].slice(paginatedEntries.length)?.map((entry, index) => (
-                <div key={index} className="border-2 p-2 m-2">
-                  TEST
-                  <p className="text-sm">{entry?.date}</p>
-                  <p className="font-bold">{entry?.name}</p>
-                  <p className="text-sm">{entry?.message}</p>
-                </div>
-              ))}
-
-            {/* Check in a guest Form */}
-            {page == paginatedEntries.length && (
+            {/* Form only on the last page */}
+            {page === paginatedEntries.length && (
               <form className="border-2 p-2 m-2">
-                <p className="text-sm">
-                  {new Date().toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </p>
+                <p className="text-sm">{newEntry.date}</p>
                 <input
                   type="text"
                   placeholder="Your Name"
@@ -269,7 +258,7 @@ export default function FlipBook() {
                   placeholder="Message"
                   value={newEntry.message}
                   onChange={(e) => handleInputChange(e, "message")}
-                  className=" text-sm w-full"
+                  className="text-sm w-full"
                 />
               </form>
             )}
