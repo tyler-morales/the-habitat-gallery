@@ -1,54 +1,70 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const entries = [
-  { date: "1/27/25", name: "Homer Simpson", message: "Mmm... art. Almost as good as donuts!" },
-  { date: "1/27/25", name: "Darth Vader", message: "Impressive. Most impressive." },
-  { date: "1/27/25", name: "Tony Stark", message: "This place has class... almost as much as me." },
-  { date: "1/27/25", name: "Yoda", message: "Great gallery, this is. Inspired, I am." },
-  { date: "1/27/25", name: "Deadpool", message: "10/10 would break the fourth wall again!" },
-  { date: "1/27/25", name: "Sherlock Holmes", message: "Elementary, my dear artist." },
-  { date: "1/27/25", name: "Walter White", message: "You're goddamn right this art is amazing." },
-  { date: "1/27/25", name: "Patrick Star", message: "Is mayonnaise an art?" },
-  { date: "1/27/25", name: "The Joker", message: "Why so... artistic?" },
+  { date: "1/27/25", name: "1. Homer Simpson", message: "Mmm... art. Almost as good as donuts!" },
+  { date: "1/27/25", name: "2. Darth Vader", message: "Impressive. Most impressive." },
   {
     date: "1/27/25",
-    name: "Frodo Baggins",
+    name: "3. Tony Stark",
+    message: "This place has class... almost as much as me.",
+  },
+  { date: "1/27/25", name: "4. Yoda", message: "Great gallery, this is. Inspired, I am." },
+  { date: "1/27/25", name: "5. Deadpool", message: "10/10 would break the fourth wall again!" },
+  { date: "1/27/25", name: "6. Sherlock Holmes", message: "Elementary, my dear artist." },
+  {
+    date: "1/27/25",
+    name: "7. Walter White",
+    message: "You're goddamn right this art is amazing.",
+  },
+  { date: "1/27/25", name: "8. Patrick Star", message: "Is mayonnaise an art?" },
+  { date: "1/27/25", name: "9. The Joker", message: "Why so... artistic?" },
+  {
+    date: "1/27/25",
+    name: "10. Frodo Baggins",
     message: "One does not simply walk past this gallery!",
   },
   {
     date: "1/27/25",
-    name: "Michael Scott",
+    name: "11. Michael Scott",
     message:
       "Would I rather be feared or loved? Easy. I want people to love my art while fearing its brilliance.",
   },
   {
     date: "1/27/25",
-    name: "Gandalf",
+    name: "12. Gandalf",
     message:
       "A wizard is never late to an art exhibition, nor is he early. He arrives precisely when he means to!",
   },
   {
     date: "1/27/25",
-    name: "Bugs Bunny",
+    name: "13. Bugs Bunny",
     message: "Ehh... what’s up with all this beautiful art, doc?",
   },
-  { date: "1/27/25", name: "Marty McFly", message: "Great Scott! This art belongs in the future!" },
   {
     date: "1/27/25",
-    name: "Spock",
+    name: "14. Marty McFly",
+    message: "Great Scott! This art belongs in the future!",
+  },
+  {
+    date: "1/27/25",
+    name: "15. Spock",
     message: "Fascinating. The logic of these compositions is unparalleled.",
   },
   {
     date: "1/27/25",
-    name: "Jack Sparrow",
+    name: "16. Jack Sparrow",
     message: "This gallery needs more rum... but otherwise, I approve.",
   },
-  { date: "1/27/25", name: "Mario", message: "It’s-a me, Mario! And I-a love-a this art!" },
-  { date: "1/27/25", name: "The Mandalorian", message: "This is the way... to great art." },
-  { date: "1/27/25", name: "Thanos", message: "Perfectly balanced, as all great art should be." },
+  { date: "1/27/25", name: "17. Mario", message: "It’s-a me, Mario! And I-a love-a this art!" },
+  { date: "1/27/25", name: "18. The Mandalorian", message: "This is the way... to great art." },
   {
     date: "1/27/25",
-    name: "Bob Ross",
+    name: "19. Thanos",
+    message: "Perfectly balanced, as all great art should be.",
+  },
+  {
+    date: "1/27/25",
+    name: "20. Bob Ross",
     message: "There are no mistakes, only happy little brushstrokes.",
   },
 ];
@@ -56,22 +72,47 @@ const entries = [
 export default function FlipBook() {
   const [page, setPage] = useState(1);
   const entriesPerPage = 4;
+  const [isSinglePage, setIsSinglePage] = useState(false);
+
+  useEffect(() => {
+    const updateScreenSize = () => {
+      setIsSinglePage(window.innerWidth < 1000);
+    };
+    updateScreenSize();
+    window.addEventListener("resize", updateScreenSize);
+    return () => window.removeEventListener("resize", updateScreenSize);
+  }, []);
 
   const paginatedEntries = [];
-  for (let i = 0; i < entries.length; i += entriesPerPage) {
+  for (let i = -4; i < entries.length; i += entriesPerPage) {
     paginatedEntries.push(entries.slice(i, i + entriesPerPage));
   }
 
   const nextPage = () => {
-    if (page < paginatedEntries.length) {
-      setPage(page + 1);
-    }
+    setPage((prev) => {
+      const isLastPage = prev >= paginatedEntries.length + 1;
+
+      if (isLastPage) return prev; // Prevent going beyond the last page
+
+      // If on the first page, move forward by 1
+      if (prev === 1) return prev + 1;
+
+      // Move forward by 1 if single-page mode is active, otherwise by 2
+      return isSinglePage ? prev + 1 : prev + 2;
+    });
   };
 
   const prevPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
+    setPage((prev) => {
+      const isFirstPage = prev === 1;
+      if (isFirstPage) return prev; // Prevent going before the first page
+
+      // If on page 2, move back by 1
+      if (prev === 2) return prev - 1;
+
+      // Move back by 1 if single-page mode is active, otherwise by 2
+      return isSinglePage ? prev - 1 : prev - 2;
+    });
   };
 
   return (
@@ -80,39 +121,61 @@ export default function FlipBook() {
       {page === 1 && (
         <div
           onClick={nextPage}
-          className="w-full max-w-[500px] aspect-[3/4] bg-amber-950 cursor-pointer"
+          className="leather w-full max-w-[500px] aspect-[3/4] bg-amber-950 cursor-pointer rounded-r-2xl shadow-2xl drop-shadow-xl"
         >
-          <h1 className="text-white text-2xl font-bold">Guestbook</h1>
+          <div className="p-8">
+            <h1 className="text-white text-2xl font-bold">Guestbook</h1>
+          </div>
         </div>
       )}
 
       {page > 1 && (
-        <div className="w-full max-w-[1000px] aspect-[4/3] bg-amber-950 flex rounded-lg @container">
+        <div className="leather w-full max-w-[1000px] aspect-[4/3] bg-amber-950 flex rounded-lg @container drop-shadow-xl">
           {/* Left Page */}
-          <div className="relative p-3 rounded-lg bg-yellow-100 my-4 mr-2 ml-4 w-full border-2">
-            <h2 className="text-lg font-bold text-center">Page {page}</h2>
-            {paginatedEntries[page - 2]?.map((entry, index) => (
-              <div key={index} className="border-2 p-2 m-2">
-                <p className="text-sm">{entry.date}</p>
-                <p className="font-bold">{entry.name}</p>
-                <p className="text-sm">{entry.message}</p>
-              </div>
-            ))}
+          <div
+            style={{
+              backgroundImage: `url(${
+                process.env.NEXT_PUBLIC_API_BASE_PATH || ""
+              }/images/textures/paper.png)`,
+              boxShadow: "5px 3px 5px black",
+            }}
+            className="relative rounded-l-lg @max-[1000px]:rounded-r-lg bg-yellow-100 w-full my-6 p-2 ml-6 @max-[1000px]:mr-6  drop-shadow-[5px_0px_5px_rgba(0,0,0,.01)] z-10"
+          >
+            <h2 className="text-lg font-bold text-center">
+              {page > 2 ? `Page ${page - 1}` : `Guest book ${page}`}
+            </h2>
+            {page == 2 && <div className="border-2 p-2 m-2 h-[90%]">hello</div>}
+            {page > 2 &&
+              paginatedEntries[page - 2]?.map((entry, index) => (
+                <div key={index} className="border-2 p-2 m-2">
+                  <p className="text-sm">{entry.date}</p>
+                  <p className="font-bold">{entry.name}</p>
+                  <p className="text-sm">{entry.message}</p>
+                </div>
+              ))}
             {/* Click Box to go back */}
             <span
               onClick={prevPage}
-              className="absolute left-0 top-0 w-1/6 h-full bg-red-400 opacity-50 cursor-pointer"
+              className="absolute left-0 top-0 w-[20px] h-full bg-red-400 opacity-0 cursor-pointer"
             ></span>
             {/* Click Box to go forward */}
             <span
               onClick={nextPage}
-              className="absolute right-0 top-0 w-1/6 h-full bg-red-400 opacity-50 cursor-pointer @min-[1000px]:hidden"
+              className="absolute right-0 top-0 w-[20px] h-full bg-red-400 opacity-0 cursor-pointer @min-[1000px]:hidden"
             ></span>
           </div>
 
           {/* Right Page */}
-          <div className="relative p-3 rounded-lg bg-blue-500 my-4 mr-4 ml-2 w-full border-2  @max-[1000px]:hidden">
-            <h2 className="text-lg font-bold text-center">Page {page + 1}</h2>
+          <div
+            style={{
+              backgroundImage: `url(${
+                process.env.NEXT_PUBLIC_API_BASE_PATH || ""
+              }/images/textures/paper.png)`,
+              boxShadow: "5px 3px 5px black",
+            }}
+            className="relative rounded-r-lg bg-yellow-100 w-full my-6 p-2 mr-6 @max-[1000px]:hidden"
+          >
+            <h2 className="text-lg font-bold text-center">Page {page}</h2>
             {paginatedEntries[page - 1]?.map((entry, index) => (
               <div key={index} className="border-2 p-2 m-2">
                 <p className="text-sm">{entry.date}</p>
@@ -123,7 +186,7 @@ export default function FlipBook() {
             {/* Click Box to go forward */}
             <span
               onClick={nextPage}
-              className="absolute right-0 top-0 w-1/6 h-full bg-red-400 opacity-50 cursor-pointer"
+              className="absolute right-0 top-0 w-[20px] h-full bg-red-400 opacity-0 cursor-pointer"
             ></span>
           </div>
         </div>

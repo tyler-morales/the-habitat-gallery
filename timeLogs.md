@@ -13,5 +13,5 @@ TOTAL: 4.6
 
 1/27/25
 plan: .6
-code: .3
-TOTAL: 1
+code: .3,1,1,1
+TOTAL: 4

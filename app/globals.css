@@ -80,3 +80,11 @@ dialog::backdrop {
   background: var(--pattern, radial-gradient(closest-side, #f9f6f6, #fff) 0/ 1em 1em space),
     var(--map, linear-gradient(90deg, #e9e8e8, #fff));
 }
+
+.leather-stitch {
+  border: 2px dashed hsla(44, 84%, 36%, 0.8);
+}
+
+.leather {
+  background: url(https://i.imgur.com/IMjKmwu.jpg) #6b3a0d;
+}
