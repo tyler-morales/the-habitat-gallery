@@ -70,7 +70,7 @@ const data = [
   },
 ];
 
-export default function FlipBook() {
+export default function GuestBook({ checkInRef }) {
   const [page, setPage] = useState(1);
   const [paginatedEntries, setPaginatedEntries] = useState();
   const [isSinglePage, setIsSinglePage] = useState(false);
@@ -153,7 +153,7 @@ export default function FlipBook() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-[100vh]">
+    <div ref={checkInRef} className="flex flex-col items-center justify-center h-[80vh]">
       {/* Cover */}
       {page === 1 && (
         <button
