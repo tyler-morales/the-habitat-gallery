@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 const data = [
-  { date: "1/27/25", name: "1. Homer Simpson", message: "Mmm... art. Almost as good as donuts!" },
-  { date: "1/27/25", name: "2. Darth Vader", message: "Impressive. Most impressive." },
+  // { date: "1/27/25", name: "1. Homer Simpson", message: "Mmm... art. Almost as good as donuts!" },
+  // { date: "1/27/25", name: "2. Darth Vader", message: "Impressive. Most impressive." },
   {
     date: "1/27/25",
     name: "3. Tony Stark",
@@ -82,6 +82,7 @@ export default function FlipBook() {
     }),
     name: "",
     message: "",
+    userFlag: true,
   });
 
   const handleInputChange = (e, field) => {
@@ -97,25 +98,24 @@ export default function FlipBook() {
     });
   };
 
+  const paginateData = (data) => {
+    const pageSize = 5;
+    const result = [];
+    for (let i = 0; i < data.length; i += pageSize) {
+      result.push(data.slice(i, i + pageSize));
+    }
+
+    // Ensure form is on the last page, respecting `pageSize`
+    if (result.length > 0 && result[result.length - 1].length < pageSize) {
+      result[result.length - 1].push(newEntry);
+    } else {
+      result.push([newEntry]);
+    }
+
+    return result;
+  };
+
   useEffect(() => {
-    const paginateData = (data, pageSize = 5) => {
-      const result = [];
-      for (let i = 0; i < data.length; i += pageSize) {
-        result.push(data.slice(i, i + pageSize));
-      }
-
-      // Append newEntry while respecting the pageSize limit
-      if (result.length > 0 && result[result.length - 1].length < pageSize) {
-        // If the last array has space, add newEntry to it
-        result[result.length - 1].push(newEntry);
-      } else {
-        // Otherwise, create a new array for newEntry
-        result.push([newEntry]);
-      }
-
-      return result;
-    };
-
     setPaginatedEntries(paginateData(data));
     const updateScreenSize = () => {
       setIsSinglePage(window.innerWidth < 800);
@@ -128,6 +128,8 @@ export default function FlipBook() {
   console.log(paginatedEntries);
 
   const nextPage = () => {
+    console.log(page);
+
     setPage((prev) => {
       const isLastPage = prev >= paginatedEntries.length + 1;
 
@@ -153,7 +155,7 @@ export default function FlipBook() {
       return isSinglePage ? prev - 1 : prev - 2;
     });
   };
-  console.log(page);
+  // console.log(page);
 
   return (
     <div className="flex flex-col items-center justify-center h-[100vh]">
@@ -183,17 +185,23 @@ export default function FlipBook() {
           >
             <h2 className="text-lg font-bold text-center">Page {page - 1}</h2>
             {page > 1 &&
-              page - 1 != paginatedEntries.length &&
-              paginatedEntries[page - 2]?.map((entry, index) => (
-                <div key={index} className="font-serif border-b-2 border-orange-950 p-2 m-2">
-                  <p className="text-sm">{entry.date}</p>
-                  <p className="font-bold">{entry.name}</p>
-                  <p className="text-sm">{entry.message}</p>
-                </div>
-              ))}
+              // page - 1 != paginatedEntries.length &&
+              paginatedEntries[page - 2]?.map(
+                (entry, index) =>
+                  !entry.userFlag && (
+                    <div
+                      key={index}
+                      className="font-serif border-b-2 border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto"
+                    >
+                      <p className="text-sm">{entry.date}</p>
+                      <p className="font-bold">{entry.name}</p>
+                      <p className="text-sm">{entry.message}</p>
+                    </div>
+                  )
+              )}
             {/* Form only on the last page */}
             {page - 1 === paginatedEntries.length && (
-              <form className="font-serif border-b-2 border-orange-950 p-2 m-2">
+              <form className="font-serif border-b-2 border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto">
                 <p className="text-sm">{newEntry.date}</p>
                 <input
                   type="text"
@@ -212,15 +220,24 @@ export default function FlipBook() {
               </form>
             )}
             {/* Click Box to go back */}
-            <span
+            <div
               onClick={prevPage}
-              className="absolute left-0 top-0 w-[20px] h-full bg-red-400 opacity-0 cursor-pointer"
-            ></span>
+              className="absolute left-0 top-0 w-[20px] h-full cursor-pointer flex items-center group"
+            >
+              <span className="block text-2xl opacity-40 transition-all group-hover:opacity-100 @min-w-[1000px]:ml-2 ml-1">
+                «
+              </span>
+            </div>
+
             {/* Click Box to go forward */}
-            <span
+            <div
               onClick={nextPage}
-              className="absolute right-0 top-0 w-[20px] h-full bg-red-400 opacity-0 cursor-pointer @min-[800px]:hidden"
-            ></span>
+              className="absolute right-0 top-0 w-[20px] h-full cursor-pointer flex items-center group @min-[800px]:hidden"
+            >
+              <span className="block text-2xl opacity-40 transition-all group-hover:opacity-100">
+                »
+              </span>
+            </div>
           </div>
 
           {/* Right Page */}
@@ -234,17 +251,25 @@ export default function FlipBook() {
             className="relative rounded-r-lg bg-yellow-100 w-full my-6 p-2 mr-6 @max-[800px]:hidden"
           >
             <h2 className="text-lg font-bold text-center">Page {page}</h2>
-            {paginatedEntries[page - 1]?.map((entry, index) => (
-              <div key={index} className="font-serif border-b-2 border-orange-950 p-2 m-2">
-                <p className="text-sm">{entry?.date}</p>
-                <p className="font-bold">{entry?.name}</p>
-                <p className="text-sm">{entry?.message}</p>
-              </div>
-            ))}
+            {page > 1 &&
+              page - 1 != paginatedEntries.length &&
+              paginatedEntries[page - 1]?.map(
+                (entry, index) =>
+                  !entry.userFlag && (
+                    <div
+                      key={index}
+                      className="font-serif border-b-2 border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto"
+                    >
+                      <p className="text-sm">{entry.date}</p>
+                      <p className="font-bold">{entry.name}</p>
+                      <p className="text-sm">{entry.message}</p>
+                    </div>
+                  )
+              )}
 
             {/* Form only on the last page */}
             {page === paginatedEntries.length && (
-              <form className="border-2 p-2 m-2">
+              <form className="border-b-2 p-2 m-2">
                 <p className="text-sm">{newEntry.date}</p>
                 <input
                   type="text"
@@ -264,10 +289,14 @@ export default function FlipBook() {
             )}
 
             {/* Click Box to go forward */}
-            <span
+            <div
               onClick={nextPage}
-              className="absolute right-0 top-0 w-[20px] h-full bg-red-400 opacity-0 cursor-pointer"
-            ></span>
+              className="absolute right-0 top-0 w-[20px] h-full cursor-pointer flex items-center group"
+            >
+              <span className="block text-2xl opacity-40 transition-all group-hover:opacity-100">
+                »
+              </span>
+            </div>
           </div>
         </div>
       )}
