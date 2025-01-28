@@ -156,28 +156,6 @@ export default function FlipBook() {
     });
   };
 
-  const Form = ({ entry }) => {
-    return (
-      <form className="font-serif border-b-2 border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto">
-        <p className="text-sm">{entry.date}</p>
-        <input
-          type="text"
-          placeholder="Your Name"
-          value={entry.name}
-          onChange={(e) => handleInputChange(e, "name")}
-          className="font-bold block w-full"
-        />
-        <textarea
-          type="text"
-          placeholder="Message"
-          value={entry.message}
-          onChange={(e) => handleInputChange(e, "message")}
-          className="text-sm w-full"
-        />
-      </form>
-    );
-  };
-
   return (
     <div className="flex flex-col items-center justify-center h-[100vh]">
       {/* Cover */}
@@ -220,7 +198,25 @@ export default function FlipBook() {
                   )
               )}
             {/* Form only on the last page */}
-            {page - 1 === paginatedEntries.length && <Form entry={newEntry} />}
+            {page - 1 === paginatedEntries.length && (
+              <form className="font-serif border-b-2 border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto">
+                <p className="text-sm">{newEntry.date}</p>
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={newEntry.name}
+                  onChange={(e) => handleInputChange(e, "name")}
+                  className="font-bold block w-full"
+                />
+                <textarea
+                  type="text"
+                  placeholder="Message"
+                  value={newEntry.message}
+                  onChange={(e) => handleInputChange(e, "message")}
+                  className="text-sm w-full"
+                />
+              </form>
+            )}
             {/* Click Box to go back */}
             <div
               onClick={prevPage}
@@ -270,7 +266,25 @@ export default function FlipBook() {
               )}
 
             {/* Form only on the last page */}
-            {page === paginatedEntries.length && <Form entry={newEntry} />}
+            {page === paginatedEntries.length && (
+              <form className="font-serif border-b-2 border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto">
+                <p className="text-sm">{newEntry.date}</p>
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={newEntry.name}
+                  onChange={(e) => handleInputChange(e, "name")}
+                  className="font-bold block w-full"
+                />
+                <textarea
+                  type="text"
+                  placeholder="Message"
+                  value={newEntry.message}
+                  onChange={(e) => handleInputChange(e, "message")}
+                  className="text-sm w-full"
+                />
+              </form>
+            )}
 
             {/* Click Box to go forward */}
             <div
