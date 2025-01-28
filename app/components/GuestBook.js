@@ -185,17 +185,21 @@ export default function GuestBook({ checkInRef }) {
                   !entry.userFlag && (
                     <div
                       key={index}
-                      className="font-serif border-b-2 border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto"
+                      className={`nanum-pen-script-regular ${
+                        index + 1 == paginatedEntries[page - 2].length ? "border-b-0" : "border-b-2"
+                      } border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto`}
                     >
-                      <p className="text-sm">{entry.date}</p>
-                      <p className="font-bold">{entry.name}</p>
-                      <p className="text-sm">{entry.message}</p>
+                      <p className="text-lg">{entry.date}</p>
+                      <p className="text-2xl font-bold">{entry.name}</p>
+                      <p className="text-lg">{entry.message}</p>
                     </div>
                   )
               )}
             {/* Form only on the last page */}
             {page - 1 === paginatedEntries.length && (
-              <form className="font-serif border-b-2 border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto">
+              <form
+                className={`nanum-pen-script-regular border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto`}
+              >
                 <p className="text-sm">{newEntry.date}</p>
                 <input
                   type="text"
@@ -252,32 +256,36 @@ export default function GuestBook({ checkInRef }) {
                   !entry.userFlag && (
                     <div
                       key={index}
-                      className="font-serif border-b-2 border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto"
+                      className={`nanum-pen-script-regular ${
+                        index + 1 == paginatedEntries[page - 2].length ? "border-b-0" : "border-b-2"
+                      } border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto`}
                     >
-                      <p className="text-sm">{entry.date}</p>
-                      <p className="font-bold">{entry.name}</p>
-                      <p className="text-sm">{entry.message}</p>
+                      <p className="text-lg">{entry.date}</p>
+                      <p className="font-bold text-2xl">{entry.name}</p>
+                      <p className="text-lg">{entry.message}</p>
                     </div>
                   )
               )}
 
             {/* Form only on the last page */}
             {page === paginatedEntries.length && (
-              <form className="font-serif border-b-2 border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto">
-                <p className="text-sm">{newEntry.date}</p>
+              <form
+                className={`nanum-pen-script-regular border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto`}
+              >
+                <p className="text-lg">{newEntry.date}</p>
                 <input
                   type="text"
                   placeholder="Your Name"
                   value={newEntry.name}
                   onChange={(e) => handleInputChange(e, "name")}
-                  className="font-bold block w-full"
+                  className="font-bold block w-full text-2xl"
                 />
                 <textarea
                   type="text"
                   placeholder="Message"
                   value={newEntry.message}
                   onChange={(e) => handleInputChange(e, "message")}
-                  className="text-sm w-full"
+                  className="text-lg w-full"
                 />
               </form>
             )}
