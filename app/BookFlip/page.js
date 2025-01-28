@@ -183,7 +183,7 @@ export default function FlipBook() {
                   <p className="text-sm">{entry.message}</p>
                 </div>
               ))}
-            {page > 2 && (
+            {page > 2 && page == paginatedEntries.length - 1 && (
               <form className="border-2 p-2 m-2">
                 <p className="text-sm">
                   {new Date().toLocaleDateString("en-US", {
@@ -240,29 +240,32 @@ export default function FlipBook() {
             ))}
 
             {/* Check in a guest Form */}
-            <form className="border-2 p-2 m-2">
-              <p className="text-sm">
-                {new Date().toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </p>
-              <input
-                type="text"
-                placeholder="Your Name"
-                value={newEntry.name}
-                onChange={(e) => handleInputChange(e, "name")}
-                className="font-bold block w-full"
-              />
-              <textarea
-                type="text"
-                placeholder="Message"
-                value={newEntry.message}
-                onChange={(e) => handleInputChange(e, "message")}
-                className=" text-sm w-full"
-              />
-            </form>
+            {page == paginatedEntries.length && (
+              <form className="border-2 p-2 m-2">
+                <p className="text-sm">
+                  {new Date().toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  value={newEntry.name}
+                  onChange={(e) => handleInputChange(e, "name")}
+                  className="font-bold block w-full"
+                />
+                <textarea
+                  type="text"
+                  placeholder="Message"
+                  value={newEntry.message}
+                  onChange={(e) => handleInputChange(e, "message")}
+                  className=" text-sm w-full"
+                />
+              </form>
+            )}
+
             {/* Click Box to go forward */}
             <span
               onClick={nextPage}
