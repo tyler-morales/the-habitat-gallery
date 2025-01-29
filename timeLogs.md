@@ -20,3 +20,7 @@ TOTAL: 6.5
 plan: 1
 code:1,1,1,1,1,.75
 TOTAL: 6.75
+
+1/29/25
+code:1,1,
+TOTAL:2

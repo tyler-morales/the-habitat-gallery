@@ -69,7 +69,7 @@ export default function EntryRoom({ onSignClick, ref, setHasCheckedIn }) {
           backgroundSize: "cover", // Ensure the image fits inside
         }}
         onClick={checkIn}
-        className="w-[300px] h-[200px] absolute bottom-[-100px] left-[300px] z-50 cursor-pointer"
+        className="w-[300px] h-[200px] absolute bottom-[-100px] left-[300px] z-50 cursor-pointer shadow-md"
       >
         <span> Check in Desk</span>
       </button>

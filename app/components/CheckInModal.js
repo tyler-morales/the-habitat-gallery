@@ -7,19 +7,8 @@ export default function CheckInModal({ checkInRef }) {
   return (
     <dialog
       ref={checkInRef}
-      className="w-[80vw] m-auto relative rounded-3xl grid lg:grid-cols-2 px-10 h-[80vh] place-items-end border-4"
+      className="m-auto rounded-3xl w-[80vw] max-h-[90vh] h-[90vh] overflow-hidden"
     >
-      {/* New Section (Spans Both Columns) */}
-      <div className="col-span-2 w-full text-center ">
-        <h2 className="text-xl font-bold">Welcome to the Ticket Booth</h2>
-        <p className="text-sm text-gray-600">Confirm your attendance and sign the guestbook.</p>
-      </div>
-      {/* Ticket Component */}
-      <Ticket />
-
-      {/* GuestBook Component */}
-      <GuestBook />
-
       {/* Close Button */}
       <button
         onClick={() => checkInRef.current.close()}
@@ -27,6 +16,48 @@ export default function CheckInModal({ checkInRef }) {
       >
         x
       </button>
+
+      {/* Main Content */}
+      <div className="w-full h-[87%] overflow-hidden flex items-center px-8 flex-col  lg:flex-row">
+        {/* Ticket Component */}
+        <div className="flex justify-center h-full items-end w-full">
+          <Ticket />
+        </div>
+
+        {/* GuestBook Component */}
+        <div className="h-full w-full z-50">
+          <GuestBook />
+        </div>
+      </div>
+      <div
+        style={{
+          backgroundImage: `url('${
+            process.env.NEXT_PUBLIC_API_BASE_PATH || ""
+          }/images/textures/wood.jpg')`,
+        }}
+        className="w-full h-full"
+      >
+        {/* Plaque */}
+        <div className="top-4 relative w-max p-4 justify-self-center bg-gradient-to-br from-orange-300 to-orange-500 border-2 border-orange-400 rounded-md shadow-sm">
+          <h3 className="font-bold px-4 text-2xl text-center uppercase font-serif text-yellow-800 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)] tracking-widest">
+            Ticket Desk
+          </h3>
+          {/* Screws */}
+          <div>
+            {/* Top-Left Screw */}
+            <div className="absolute top-2 left-2 w-2 h-2 rounded-full bg-orange-700 border border-orange-900 shadow-[inset_0px_2px_3px_rgba(255,255,255,0.6)]"></div>
+
+            {/* Top-Right Screw */}
+            <div className="absolute top-2 right-2 w-2 h-2 rounded-full bg-orange-700 border border-orange-900 shadow-[inset_0px_2px_3px_rgba(255,255,255,0.6)]"></div>
+
+            {/* Bottom-Left Screw */}
+            <div className="absolute bottom-2 left-2 w-2 h-2 rounded-full bg-orange-700 border border-orange-900 shadow-[inset_0px_2px_3px_rgba(255,255,255,0.6)]"></div>
+
+            {/* Bottom-Right Screw */}
+            <div className="absolute bottom-2 right-2 w-2 h-2 rounded-full bg-orange-700 border border-orange-900 shadow-[inset_0px_2px_3px_rgba(255,255,255,0.6)]"></div>
+          </div>
+        </div>
+      </div>
     </dialog>
   );
 }

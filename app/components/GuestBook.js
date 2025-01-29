@@ -86,7 +86,7 @@ export default function GuestBook({ checkInRef }) {
   };
 
   return (
-    <div ref={checkInRef} className="">
+    <div ref={checkInRef} className="flex justify-center items-end h-full">
       {/* Cover */}
       {page === 1 && (
         <button

@@ -96,7 +96,7 @@ export default function Home() {
       </div>
 
       {/* Floor */}
-      <section className="border-4 border-t-black h-[20vh] w-[270vw] flex-shrink-0 relative"></section>
+      <section className="border-black border-t-2 h-[20vh] w-[270vw] no-scrollbar"></section>
 
       {/* 👨 Person */}
       <Character position={characterPosition} />

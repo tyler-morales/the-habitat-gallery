@@ -34,7 +34,7 @@ const Ticket = () => {
   };
 
   return (
-    <div className="relative">
+    <>
       {/* Printer */}
       <div
         style={{
@@ -42,8 +42,9 @@ const Ticket = () => {
             process.env.NEXT_PUBLIC_API_BASE_PATH || ""
           }/images/items/printer.png')`,
           backgroundSize: "contain", // Ensure the image fits inside
+          backgroundRepeat: "no-repeat",
         }}
-        className={`absolute w-[350px] h-[350px] flex justify-center ${
+        className={`absolute w-full max-w-[350px] h-[350px] flex justify-center items-center ${
           removePrinter ? "z-0" : "z-40 opacity-100 transition-opacity duration-500"
         }`}
       >
@@ -54,11 +55,11 @@ const Ticket = () => {
         </button>
       </div>
 
-      {/* 3D Perspective Wrapper */}
+      {/* Ticket */}
       <div className="relative w-[250px] h-[300px] top-1" style={{ perspective: "1000px" }}>
         {/* Rotating Card Container */}
         <motion.div
-          className="relative w-full h-full"
+          className="h-full"
           style={{ transformStyle: "preserve-3d" }}
           animate={controls} // Controlled animation
         >
@@ -113,7 +114,7 @@ const Ticket = () => {
           </div>
         </motion.div>
       </div>
-    </div>
+    </>
   );
 };
 
