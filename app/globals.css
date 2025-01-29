@@ -34,7 +34,7 @@ dialog::backdrop {
   backdrop-filter: blur(10px);
 }
 dialog {
-  background-color: ;
+  /* background-color: ; */
 }
 
 .artwork-popover {
