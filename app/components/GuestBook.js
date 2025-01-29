@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import data from "../../public/data/guestBook";
 
-export default function GuestBook({ checkInRef }) {
-  const [page, setPage] = useState(1);
+export default function GuestBook({ page, setPage }) {
+  // const [page, setPage] = useState(1);
   const [paginatedEntries, setPaginatedEntries] = useState();
   const [isSinglePage, setIsSinglePage] = useState(false);
   const [newEntry, setNewEntry] = useState({
@@ -86,17 +86,17 @@ export default function GuestBook({ checkInRef }) {
   };
 
   return (
-    <div ref={checkInRef} className="flex justify-center items-end h-full">
+    <div className="flex justify-center items-end h-full">
       {/* Cover */}
       {page === 1 && (
-        <button
-          onClick={nextPage}
-          className="leather w-full max-w-[350px] aspect-[3/4] bg-amber-950 cursor-pointer rounded-r-2xl shadow-2xl drop-shadow-xl"
+        <div
+          // onClick={nextPage}
+          className="leather w-full max-w-[350px] aspect-[3/4] bg-amber-950 rounded-r-2xl shadow-2xl drop-shadow-xl"
         >
           <div className="p-8">
             <h1 className="text-white text-2xl font-bold">Guestbook</h1>
           </div>
-        </button>
+        </div>
       )}
 
       {page > 1 && (

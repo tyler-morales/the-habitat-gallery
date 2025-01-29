@@ -5,6 +5,15 @@ import Ticket from "./Ticket";
 
 export default function CheckInModal({ checkInRef }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [page, setPage] = useState(1);
+
+  const toggleBook = () => {
+    setIsExpanded((prev) => {
+      const newState = !prev;
+      setPage(newState ? 2 : 1); // If expanded, set page to 2, else set to 1
+      return newState;
+    });
+  };
 
   return (
     <dialog
@@ -22,7 +31,6 @@ export default function CheckInModal({ checkInRef }) {
       {/* Main Content */}
       <div
         className={`max-w-5xl m-auto gap-4 h-[80vh] overflow-hidden flex px-8 flex-col lg:flex-row transition-transform duration-[10000] ${
-          // Shift left so book is in the middle
           isExpanded ? "-translate-x-[0%]" : ""
         }`}
       >
@@ -41,7 +49,7 @@ export default function CheckInModal({ checkInRef }) {
             isExpanded ? "w-full" : "w-full"
           }`}
         >
-          <GuestBook />
+          <GuestBook page={page} setPage={setPage} />
         </div>
       </div>
 
@@ -54,8 +62,6 @@ export default function CheckInModal({ checkInRef }) {
         }}
         className="w-full h-full flex justify-center gap-10"
       >
-        {/* <button onClick={() => setIsExpanded(!isExpanded)}>Open me UP</button> */}
-
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="z-50 h-min p-6 mt-4 skeu w-[200px]"
@@ -85,9 +91,9 @@ export default function CheckInModal({ checkInRef }) {
         </div>
 
         <button
-          onClick={() => setIsExpanded(!isExpanded)}
+          onClick={() => toggleBook()}
+          // onClick={() => setIsExpanded(!isExpanded)}
           className="z-50 h-min p-6 mt-4 skeu w-[200px]"
-          // className="z-50 bg-blue-500 h-min p-6 rounded-lg text-white mt-4"
         >
           {isExpanded ? "Close Guest Book" : "Open Guest Book"}
         </button>
