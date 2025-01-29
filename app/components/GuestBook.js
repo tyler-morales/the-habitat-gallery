@@ -153,12 +153,12 @@ export default function GuestBook({ checkInRef }) {
   };
 
   return (
-    <div ref={checkInRef} className="flex flex-col items-center justify-center h-[80vh]">
+    <div ref={checkInRef} className="w-full flex justify-center">
       {/* Cover */}
       {page === 1 && (
         <button
           onClick={nextPage}
-          className="leather w-full max-w-[500px] aspect-[3/4] bg-amber-950 cursor-pointer rounded-r-2xl shadow-2xl drop-shadow-xl"
+          className="leather w-full max-w-[400px] aspect-[3/4] bg-amber-950 cursor-pointer rounded-r-2xl shadow-2xl drop-shadow-xl"
         >
           <div className="p-8">
             <h1 className="text-white text-2xl font-bold">Guestbook</h1>
