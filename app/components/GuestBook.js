@@ -158,7 +158,7 @@ export default function GuestBook({ checkInRef }) {
       {page === 1 && (
         <button
           onClick={nextPage}
-          className="leather w-full max-w-[400px] aspect-[3/4] bg-amber-950 cursor-pointer rounded-r-2xl shadow-2xl drop-shadow-xl"
+          className="leather w-full max-w-[350px] aspect-[3/4] bg-amber-950 cursor-pointer rounded-r-2xl shadow-2xl drop-shadow-xl"
         >
           <div className="p-8">
             <h1 className="text-white text-2xl font-bold">Guestbook</h1>

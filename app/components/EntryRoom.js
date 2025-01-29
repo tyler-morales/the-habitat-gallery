@@ -62,8 +62,14 @@ export default function EntryRoom({ onSignClick, ref, setHasCheckedIn }) {
 
       {/* Check-in desk */}
       <button
+        style={{
+          backgroundImage: `url('${
+            process.env.NEXT_PUBLIC_API_BASE_PATH || ""
+          }/images/decor/info-desk.png')`,
+          backgroundSize: "cover", // Ensure the image fits inside
+        }}
         onClick={checkIn}
-        className="w-[300px] h-[200px] absolute bottom-[-100px] left-[300px] bg-black text-white z-50 cursor-auto"
+        className="w-[300px] h-[200px] absolute bottom-[-100px] left-[300px] z-50 cursor-pointer"
       >
         <span> Check in Desk</span>
       </button>

@@ -7,11 +7,11 @@ export default function CheckInModal({ checkInRef }) {
   return (
     <dialog
       ref={checkInRef}
-      className="w-[80vw] m-auto relative rounded-3xl grid grid-cols-2 border-pink-400 border-4 px-10 h-[80vh] gap-10 place-items-center"
+      className="w-[80vw] m-auto relative rounded-3xl grid lg:grid-cols-2 px-10 h-[80vh] place-items-end border-4"
     >
       {/* New Section (Spans Both Columns) */}
-      <div className="col-span-2 w-full text-center py-4 bg-gray-100 rounded-xl shadow-md">
-        <h2 className="text-xl font-bold">Welcome to the Check-In</h2>
+      <div className="col-span-2 w-full text-center ">
+        <h2 className="text-xl font-bold">Welcome to the Ticket Booth</h2>
         <p className="text-sm text-gray-600">Confirm your attendance and sign the guestbook.</p>
       </div>
       {/* Ticket Component */}
@@ -19,6 +19,7 @@ export default function CheckInModal({ checkInRef }) {
 
       {/* GuestBook Component */}
       <GuestBook />
+
       {/* Close Button */}
       <button
         onClick={() => checkInRef.current.close()}

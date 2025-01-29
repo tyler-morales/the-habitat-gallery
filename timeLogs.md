@@ -18,5 +18,5 @@ TOTAL: 6.5
 
 1/28/25
 plan: 1
-code:1,1,1,1
-TOTAL: 5
+code:1,1,1,1,1,.75
+TOTAL: 6.75

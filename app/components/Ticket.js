@@ -10,15 +10,15 @@ const Ticket = () => {
   const printTicket = async () => {
     setTimeout(() => {
       setRemovePrinter(true);
-    }, 3900);
+    }, 4700);
 
     // Stepwise motion mimicking a printer output
     await controls.start({
-      y: [0, -20, -20, -40, -40, -270, 0], // Moves up in steps, then smoothly returns
+      y: [0, -20, -40, -80, -300, 0], // Moves up in steps, then smoothly returns
       transition: {
-        duration: 4.8, // Total duration (0.3s * 4 + 1.5s * 2)
+        duration: 6, // Total duration (0.3s * 4 + 1.5s * 2)
         ease: ["easeOut", "easeOut", "easeOut", "easeOut", "easeOut", "easeInOut"], // Smoother motion
-        times: [0, 0.0625, 0.125, 0.1875, 0.25, 0.75, 1], // Short pauses = 0.3s, Long pauses = 1.5s
+        times: [0.125, 0.125, 0.125, 0.1875, 0.25, 0.75, 1], // Short pauses = 0.3s, Long pauses = 1.5s
       },
     });
 
@@ -34,23 +34,28 @@ const Ticket = () => {
   };
 
   return (
-    <div className="relative flex justify-center">
+    <div className="relative">
       {/* Printer */}
       <div
-        className={`absolute top-10 w-[300px] bg-slate-900 h-[300px] flex justify-center rounded-t-3xl ${
+        style={{
+          backgroundImage: `url('${
+            process.env.NEXT_PUBLIC_API_BASE_PATH || ""
+          }/images/items/printer.png')`,
+          backgroundSize: "contain", // Ensure the image fits inside
+        }}
+        className={`absolute w-[350px] h-[350px] flex justify-center ${
           removePrinter ? "z-0" : "z-40 opacity-100 transition-opacity duration-500"
         }`}
       >
-        <button
-          onClick={printTicket}
-          className="text-white p-2 bg-gray-700 rounded-md hover:bg-gray-600 transition h-min cursor-pointer"
-        >
-          Print Ticket
+        <button onClick={printTicket} className="button bottom-4 absolute">
+          <div className="button__content">
+            <span className="button__text font-bold">Print Ticket</span>
+          </div>
         </button>
       </div>
 
       {/* 3D Perspective Wrapper */}
-      <div className="relative w-[250px] h-[300px]" style={{ perspective: "1000px" }}>
+      <div className="relative w-[250px] h-[300px] top-1" style={{ perspective: "1000px" }}>
         {/* Rotating Card Container */}
         <motion.div
           className="relative w-full h-full"
