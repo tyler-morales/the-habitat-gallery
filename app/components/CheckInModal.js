@@ -4,6 +4,8 @@ import GuestBook from "./GuestBook";
 import Ticket from "./Ticket";
 
 export default function CheckInModal({ checkInRef }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <dialog
       ref={checkInRef}
@@ -18,17 +20,29 @@ export default function CheckInModal({ checkInRef }) {
       </button>
 
       {/* Main Content */}
-      <div className="w-full h-[87%] overflow-hidden flex items-center px-8 flex-col  lg:flex-row">
+      <div
+        className={`w-full h-[87%] overflow-hidden flex items-center px-8 flex-col lg:flex-row transition-transform duration-[10000] ${
+          isExpanded ? "-translate-x-[0%]" : ""
+        }`}
+      >
         {/* Ticket Component */}
-        <div className="flex justify-center h-full items-end w-full">
-          <Ticket />
-        </div>
+
+        {!isExpanded && (
+          <div className="flex justify-center h-full items-end w-full transition-all duration-500">
+            <Ticket />
+          </div>
+        )}
 
         {/* GuestBook Component */}
-        <div className="h-full w-full z-50">
+
+        <div
+          className={`h-full z-50 transition-all duration-500  ${isExpanded ? "w-full" : "w-full"}`}
+        >
           <GuestBook />
         </div>
       </div>
+
+      {/* Background */}
       <div
         style={{
           backgroundImage: `url('${
@@ -37,6 +51,8 @@ export default function CheckInModal({ checkInRef }) {
         }}
         className="w-full h-full"
       >
+        <button onClick={() => setIsExpanded(!isExpanded)}>Open me UP</button>
+
         {/* Plaque */}
         <div className="top-4 relative w-max p-4 justify-self-center bg-gradient-to-br from-orange-300 to-orange-500 border-2 border-orange-400 rounded-md shadow-sm">
           <h3 className="font-bold px-4 text-2xl text-center uppercase font-serif text-yellow-800 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)] tracking-widest">
