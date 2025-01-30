@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import data from "../../public/data/guestBook";
 
-export default function GuestBook({ page, setPage, toggleBook }) {
+export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) {
   const [paginatedEntries, setPaginatedEntries] = useState();
   const [isSinglePage, setIsSinglePage] = useState(false);
   const [newEntry, setNewEntry] = useState({
@@ -59,14 +59,15 @@ export default function GuestBook({ page, setPage, toggleBook }) {
     return () => window.removeEventListener("resize", updateScreenSize);
   }, []);
 
+  console.log(page, paginatedEntries?.length, page === paginatedEntries?.length);
+
   const nextPage = () => {
     setPage((prev) => {
       const isLastPage = prev >= paginatedEntries.length + 1;
 
       if (isLastPage) return prev; // Prevent going beyond the last page
-
       // If on the first page, move forward by 1
-      if (prev === 1) return prev + 1;
+      // if (prev === 1) return prev + 1;
 
       // Move forward by 1 if single-page mode is active, otherwise by 2
       return isSinglePage ? prev + 1 : prev + 2;
@@ -76,10 +77,14 @@ export default function GuestBook({ page, setPage, toggleBook }) {
   const prevPage = () => {
     setPage((prev) => {
       const isFirstPage = prev === 1;
+
       if (isFirstPage) return prev; // Prevent going before the first page
 
-      // If on page 2, move back by 1
-      if (prev === 2) return prev - 1;
+      // If on page 2, close the book
+      if (prev === 2) {
+        setIsExpanded(false); // Collapse book
+        return 1; // Go back to cover page
+      }
 
       // Move back by 1 if single-page mode is active, otherwise by 2
       return isSinglePage ? prev - 1 : prev - 2;
@@ -162,12 +167,13 @@ export default function GuestBook({ page, setPage, toggleBook }) {
             </div>
 
             {/* Click Box to go forward */}
+
             <div
               onClick={nextPage}
               className="absolute right-0 top-0 w-[20px] h-full cursor-pointer flex items-center group @min-[800px]:hidden"
             >
               <span className="block text-2xl opacity-40 transition-all group-hover:opacity-100">
-                »
+                {page === paginatedEntries?.length + 1 ? "" : " »"}
               </span>
             </div>
           </div>
@@ -200,7 +206,6 @@ export default function GuestBook({ page, setPage, toggleBook }) {
                     </div>
                   )
               )}
-
             {/* Form only on the last page */}
             {page === paginatedEntries.length && (
               <form
@@ -223,8 +228,8 @@ export default function GuestBook({ page, setPage, toggleBook }) {
                 />
               </form>
             )}
-
             {/* Click Box to go forward */}
+
             <div
               onClick={nextPage}
               className="absolute right-0 top-0 w-[20px] h-full cursor-pointer flex items-center group"

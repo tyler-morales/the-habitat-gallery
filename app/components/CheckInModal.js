@@ -4,6 +4,7 @@ import Ticket from "./Ticket";
 
 export default function CheckInModal({ checkInRef }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [toggleItem, setToggleItem] = useState("ticket");
   const [page, setPage] = useState(1);
 
   const toggleBook = () => {
@@ -17,7 +18,7 @@ export default function CheckInModal({ checkInRef }) {
   return (
     <dialog
       ref={checkInRef}
-      className="m-auto rounded-3xl md:w-[80vw] border-2 border-yellow-400 scroll-hidden"
+      className="m-auto rounded-3xl md:w-[90vw] border-2 border-yellow-400 scroll-hidden"
     >
       <div className="p-8">
         <h2 className="font-bold text-3xl text-center">Welcome, To The Ticket Booth!!!</h2>
@@ -26,8 +27,6 @@ export default function CheckInModal({ checkInRef }) {
       {/* Main Content */}
       <div
         className={`m-auto border-2 max-w-5xl flex flex-col md:flex-row items-end justify-center w-full overflow-x-scroll scroll-hidden ${
-          // className={`m-auto border-2 max-w-5xl flex flex-col md:flex-row items-end justify-center w-full ${
-          // className={`max-w-5xl m-auto gap-4 h-[80vh] flex px-8 flex-col lg:flex-row transition-transform duration-500 ${
           isExpanded ? "-translate-x-[0%]" : ""
         }`}
       >
@@ -41,9 +40,13 @@ export default function CheckInModal({ checkInRef }) {
         {/* GuestBook Component */}
         <div
           className={`z-50 transition-all duration-500 relative w-full  border-2 border-blue-600 min-w-[400px]`}
-          // className={`z-50 transition-all duration-500 relative w-full md:p-4 border-2 border-blue-600 min-w-[400px]`}
         >
-          <GuestBook page={page} setPage={setPage} toggleBook={toggleBook} />
+          <GuestBook
+            page={page}
+            setPage={setPage}
+            toggleBook={toggleBook}
+            setIsExpanded={setIsExpanded}
+          />
         </div>
       </div>
 
