@@ -30,12 +30,11 @@ export default function CheckInModal({ checkInRef }) {
 
       {/* Main Content */}
       <div
-        className={`max-w-5xl m-auto gap-4 h-[80vh] overflow-hidden flex px-8 flex-col lg:flex-row transition-transform duration-[10000] ${
+        className={`pb-4 max-w-5xl m-auto gap-4 h-[80vh] overflow-hidden flex px-8 flex-col lg:flex-row transition-transform duration-[10000] ${
           isExpanded ? "-translate-x-[0%]" : ""
         }`}
       >
         {/* Ticket Component */}
-
         {!isExpanded && (
           <div className="flex justify-center h-full items-end w-full transition-all duration-500">
             <Ticket />
@@ -63,10 +62,10 @@ export default function CheckInModal({ checkInRef }) {
         className="w-full h-full flex justify-center gap-10"
       >
         <button
-          onClick={() => setIsExpanded(!isExpanded)}
+          // onClick={() => setIsExpanded(!isExpanded)}
           className="z-50 h-min p-6 mt-4 skeu w-[200px]"
         >
-          Print Ticket
+          Surprise me 🎊
         </button>
 
         {/* Plaque */}

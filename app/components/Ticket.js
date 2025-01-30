@@ -10,15 +10,25 @@ const Ticket = () => {
   const printTicket = async () => {
     setTimeout(() => {
       setRemovePrinter(true);
-    }, 4700);
+    }, 7000);
 
     // Stepwise motion mimicking a printer output
     await controls.start({
-      y: [0, -20, -40, -80, -300, 0], // Moves up in steps, then smoothly returns
+      y: [0, -40, -40, -60, -60, -80, -80, -330, 0], // Up in steps, final lift, then back
       transition: {
-        duration: 6, // Total duration (0.3s * 4 + 1.5s * 2)
-        ease: ["easeOut", "easeOut", "easeOut", "easeOut", "easeOut", "easeInOut"], // Smoother motion
-        times: [0.125, 0.125, 0.125, 0.1875, 0.25, 0.75, 1], // Short pauses = 0.3s, Long pauses = 1.5s
+        duration: 8.5, // Total duration
+        ease: ["easeOut", "easeOut", "easeOut", "easeOut", "easeInOut"], // Smooth steps
+        times: [
+          0,
+          0.1, // First step up (pause)
+          0.2,
+          0.3, // Second step up (pause)
+          0.4,
+          0.5, // Third step up (pause)
+          0.6,
+          0.8, // Large move up (2s)
+          1, // Slow ease down (4s)
+        ],
       },
     });
 
@@ -56,7 +66,7 @@ const Ticket = () => {
       </div>
 
       {/* Ticket */}
-      <div className="relative w-[250px] h-[300px] top-1" style={{ perspective: "1000px" }}>
+      <div className="relative w-[250px] h-[300px] -top-8" style={{ perspective: "1000px" }}>
         {/* Rotating Card Container */}
         <motion.div
           className="h-full"
