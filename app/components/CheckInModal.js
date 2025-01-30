@@ -46,7 +46,7 @@ export default function CheckInModal({ checkInRef }) {
   return (
     <dialog
       ref={checkInRef}
-      className="m-auto rounded-3xl sm:w-[90vw] border-2 border-yellow-400 scroll-hidden"
+      className="m-auto rounded-3xl sm:w-[90vw] border-b-6 border-yellow-800 scroll-hidden xl:max-w-[1256px]"
     >
       <div className="p-8">
         <h2 className="font-bold text-3xl text-center">Welcome, To The Ticket Booth!!!</h2>
@@ -76,20 +76,20 @@ export default function CheckInModal({ checkInRef }) {
 
       {/* Main Content */}
       <div
-        className={`m-auto border-2 max-w-5xl flex ${
+        className={`m-auto max-w-5xl flex ${
           isSmallScreen ? "flex-col" : "flex-row"
         } items-end justify-end md:justify-center w-full min-h-[500px]  overflow-x-scroll scroll-hidden`}
       >
         {/* Ticket Component */}
         {!isExpanded && (!isSmallScreen || toggleItem === "tickets") && (
-          <div className="bg-red-200 relative flex justify-center w-full transition-all duration-500 border-2 border-pink-500 min-w-[300px] sm:min-w-[350px]">
+          <div className="relative flex justify-center w-full transition-all duration-500 min-w-[300px] sm:min-w-[350px]">
             <Ticket />
           </div>
         )}
 
         {/* GuestBook Component */}
         {(isExpanded || !isSmallScreen || toggleItem === "guest-book") && (
-          <div className="z-50 transition-all duration-500 relative w-full border-2 border-blue-600 sm:min-w-[350px]">
+          <div className="z-50 transition-all duration-500 relative w-full sm:min-w-[350px]">
             <GuestBook
               page={page}
               setPage={setPage}
