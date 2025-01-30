@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import data from "../../public/data/guestBook";
 
-export default function GuestBook({ page, setPage }) {
-  // const [page, setPage] = useState(1);
+export default function GuestBook({ isExpanded, setIsExpanded }) {
+  const [page, setPage] = useState(1);
   const [paginatedEntries, setPaginatedEntries] = useState();
   const [isSinglePage, setIsSinglePage] = useState(false);
   const [newEntry, setNewEntry] = useState({
@@ -17,6 +17,14 @@ export default function GuestBook({ page, setPage }) {
     message: "",
     userFlag: true,
   });
+
+  const toggleBook = () => {
+    setIsExpanded((prev) => {
+      const newState = !prev;
+      setPage(newState ? 2 : 1); // If expanded, set page to 2, else set to 1
+      return newState;
+    });
+  };
 
   const handleInputChange = (e, field) => {
     const value = e.target.value;
@@ -90,8 +98,8 @@ export default function GuestBook({ page, setPage }) {
       {/* Cover */}
       {page === 1 && (
         <div
-          // onClick={nextPage}
-          className="leather w-full max-w-[350px] aspect-[3/4] bg-amber-950 rounded-r-2xl shadow-2xl drop-shadow-xl"
+          onClick={toggleBook}
+          className="leather w-full max-w-[350px] h-[450px]  bg-amber-950 rounded-r-2xl shadow-2xl drop-shadow-xl"
         >
           <div className="p-8">
             <h1 className="text-white text-2xl font-bold">Guestbook</h1>
@@ -100,7 +108,7 @@ export default function GuestBook({ page, setPage }) {
       )}
 
       {page > 1 && (
-        <div className="leather w-full max-w-[800px] aspect-[4/3] bg-amber-950 flex rounded-lg @container drop-shadow-xl">
+        <div className="leather w-full max-w-[800px]  bg-amber-950 flex rounded-lg @container drop-shadow-xl">
           {/* Left Page */}
           <div
             style={{

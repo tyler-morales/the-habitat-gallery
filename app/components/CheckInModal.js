@@ -5,15 +5,7 @@ import Ticket from "./Ticket";
 
 export default function CheckInModal({ checkInRef }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const [page, setPage] = useState(1);
-
-  const toggleBook = () => {
-    setIsExpanded((prev) => {
-      const newState = !prev;
-      setPage(newState ? 2 : 1); // If expanded, set page to 2, else set to 1
-      return newState;
-    });
-  };
+  // const [page, setPage] = useState(1);
 
   return (
     <dialog
@@ -48,7 +40,7 @@ export default function CheckInModal({ checkInRef }) {
             isExpanded ? "w-full" : "w-full"
           }`}
         >
-          <GuestBook page={page} setPage={setPage} />
+          <GuestBook isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
         </div>
       </div>
 
@@ -59,17 +51,16 @@ export default function CheckInModal({ checkInRef }) {
             process.env.NEXT_PUBLIC_API_BASE_PATH || ""
           }/images/textures/wood.jpg')`,
         }}
-        className="w-full h-full flex justify-center gap-10"
+        className="w-full flex justify-center"
       >
-        <button
-          // onClick={() => setIsExpanded(!isExpanded)}
+        {/* <button
           className="z-50 h-min p-6 mt-4 skeu w-[200px]"
         >
           Surprise me 🎊
-        </button>
+        </button> */}
 
         {/* Plaque */}
-        <div className="top-4 relative h-min w-max p-4 justify-self-center bg-gradient-to-br from-orange-300 to-orange-500 border-2 border-orange-400 rounded-md shadow-sm">
+        <div className="relative h-min w-max p-4 bg-gradient-to-br from-orange-300 to-orange-500 border-2 border-orange-400 rounded-md shadow-sm">
           <h3 className="font-bold px-4 text-2xl text-center uppercase font-serif text-yellow-800 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)] tracking-widest">
             Ticket Desk
           </h3>
@@ -89,13 +80,9 @@ export default function CheckInModal({ checkInRef }) {
           </div>
         </div>
 
-        <button
-          onClick={() => toggleBook()}
-          // onClick={() => setIsExpanded(!isExpanded)}
-          className="z-50 h-min p-6 mt-4 skeu w-[200px]"
-        >
+        {/* <button onClick={() => toggleBook()} className="z-50 h-min p-6 mt-4 skeu w-[200px]">
           {isExpanded ? "Close Guest Book" : "Open Guest Book"}
-        </button>
+        </button> */}
       </div>
     </dialog>
   );
