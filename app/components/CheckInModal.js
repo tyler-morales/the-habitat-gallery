@@ -14,11 +14,6 @@ export default function CheckInModal({ checkInRef }) {
       const smallScreen = window.innerWidth < 768;
       setIsSmallScreen(smallScreen);
 
-      // Only update toggleItem if switching to large screen
-      // if (!smallScreen) {
-      // setToggleItem(null); // Show both on large screens
-      // }
-
       if (smallScreen) setToggleItem("tickets");
     };
 
@@ -48,12 +43,6 @@ export default function CheckInModal({ checkInRef }) {
       }
     }
   };
-  // const handleToggle = (item) => {
-  //   if (isSmallScreen) {
-  //     setToggleItem(item);
-  //   }
-  // };
-
   return (
     <dialog
       ref={checkInRef}
@@ -89,13 +78,12 @@ export default function CheckInModal({ checkInRef }) {
       <div
         className={`m-auto border-2 max-w-5xl flex ${
           isSmallScreen ? "flex-col" : "flex-row"
-        } items-end justify-center w-full overflow-x-scroll scroll-hidden`}
+        } items-end justify-end md:justify-center w-full min-h-[500px]  overflow-x-scroll scroll-hidden`}
       >
         {/* Ticket Component */}
-        {/* {!isExpanded && (!isSmallScreen || toggleItem === "tickets") && ( */}
         {(!isExpanded || toggleItem === "tickets") &&
           (!isSmallScreen || toggleItem === "tickets") && (
-            <div className="bg-red-200 relative flex justify-center w-full transition-all duration-500 border-2 border-pink-500 min-w-[400px]">
+            <div className="bg-red-200 relative flex justify-center w-full transition-all duration-500 border-2 border-pink-500 min-w-[300px] sm:min-w-[350px]">
               <Ticket />
             </div>
           )}
