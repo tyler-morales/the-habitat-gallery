@@ -1,77 +1,9 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-const data = [
-  // { date: "1/27/25", name: "1. Homer Simpson", message: "Mmm... art. Almost as good as donuts!" },
-  // { date: "1/27/25", name: "2. Darth Vader", message: "Impressive. Most impressive." },
-  {
-    date: "1/27/25",
-    name: "3. Tony Stark",
-    message: "This place has class... almost as much as me.",
-  },
-  { date: "1/27/25", name: "4. Yoda", message: "Great gallery, this is. Inspired, I am." },
-  { date: "1/27/25", name: "5. Deadpool", message: "10/10 would break the fourth wall again!" },
-  { date: "1/27/25", name: "6. Sherlock Holmes", message: "Elementary, my dear artist." },
-  {
-    date: "1/27/25",
-    name: "7. Walter White",
-    message: "You're goddamn right this art is amazing.",
-  },
-  { date: "1/27/25", name: "8. Patrick Star", message: "Is mayonnaise an art?" },
-  { date: "1/27/25", name: "9. The Joker", message: "Why so... artistic?" },
-  {
-    date: "1/27/25",
-    name: "10. Frodo Baggins",
-    message: "One does not simply walk past this gallery!",
-  },
-  {
-    date: "1/27/25",
-    name: "11. Michael Scott",
-    message:
-      "Would I rather be feared or loved? Easy. I want people to love my art while fearing its brilliance.",
-  },
-  {
-    date: "1/27/25",
-    name: "12. Gandalf",
-    message:
-      "A wizard is never late to an art exhibition, nor is he early. He arrives precisely when he means to!",
-  },
-  {
-    date: "1/27/25",
-    name: "13. Bugs Bunny",
-    message: "Ehh... what’s up with all this beautiful art, doc?",
-  },
-  {
-    date: "1/27/25",
-    name: "14. Marty McFly",
-    message: "Great Scott! This art belongs in the future!",
-  },
-  {
-    date: "1/27/25",
-    name: "15. Spock",
-    message: "Fascinating. The logic of these compositions is unparalleled.",
-  },
-  {
-    date: "1/27/25",
-    name: "16. Jack Sparrow",
-    message: "This gallery needs more rum... but otherwise, I approve.",
-  },
-  { date: "1/27/25", name: "17. Mario", message: "It’s-a me, Mario! And I-a love-a this art!" },
-  { date: "1/27/25", name: "18. The Mandalorian", message: "This is the way... to great art." },
-  {
-    date: "1/27/25",
-    name: "19. Thanos",
-    message: "Perfectly balanced, as all great art should be.",
-  },
-  {
-    date: "1/27/25",
-    name: "20. Bob Ross",
-    message: "There are no mistakes, only happy little brushstrokes.",
-  },
-];
+import data from "../../public/data/guestBook";
 
-export default function GuestBook({ checkInRef }) {
-  const [page, setPage] = useState(1);
+export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) {
   const [paginatedEntries, setPaginatedEntries] = useState();
   const [isSinglePage, setIsSinglePage] = useState(false);
   const [newEntry, setNewEntry] = useState({
@@ -85,6 +17,7 @@ export default function GuestBook({ checkInRef }) {
     userFlag: true,
   });
 
+  // Update guest's entry
   const handleInputChange = (e, field) => {
     const value = e.target.value;
     setNewEntry((prev) => ({ ...prev, [field]: value }));
@@ -98,6 +31,7 @@ export default function GuestBook({ checkInRef }) {
     });
   };
 
+  // Convert ALL entries into paginated data
   const paginateData = (data) => {
     const pageSize = 5;
     const result = [];
@@ -130,9 +64,8 @@ export default function GuestBook({ checkInRef }) {
       const isLastPage = prev >= paginatedEntries.length + 1;
 
       if (isLastPage) return prev; // Prevent going beyond the last page
-
       // If on the first page, move forward by 1
-      if (prev === 1) return prev + 1;
+      // if (prev === 1) return prev + 1;
 
       // Move forward by 1 if single-page mode is active, otherwise by 2
       return isSinglePage ? prev + 1 : prev + 2;
@@ -142,10 +75,14 @@ export default function GuestBook({ checkInRef }) {
   const prevPage = () => {
     setPage((prev) => {
       const isFirstPage = prev === 1;
+
       if (isFirstPage) return prev; // Prevent going before the first page
 
-      // If on page 2, move back by 1
-      if (prev === 2) return prev - 1;
+      // If on page 2, close the book
+      if (prev === 2) {
+        setIsExpanded(false); // Collapse book
+        return 1; // Go back to cover page
+      }
 
       // Move back by 1 if single-page mode is active, otherwise by 2
       return isSinglePage ? prev - 1 : prev - 2;
@@ -153,12 +90,12 @@ export default function GuestBook({ checkInRef }) {
   };
 
   return (
-    <div ref={checkInRef} className="flex flex-col items-center justify-center h-[80vh]">
+    <div className="flex justify-center items-end">
       {/* Cover */}
       {page === 1 && (
         <button
-          onClick={nextPage}
-          className="leather w-full max-w-[500px] aspect-[3/4] bg-amber-950 cursor-pointer rounded-r-2xl shadow-2xl drop-shadow-xl"
+          onClick={toggleBook}
+          className="cursor-pointer leather w-full max-w-[350px] h-[450px] bg-amber-950 rounded-r-2xl shadow-2xl drop-shadow-xl"
         >
           <div className="p-8">
             <h1 className="text-white text-2xl font-bold">Guestbook</h1>
@@ -167,7 +104,7 @@ export default function GuestBook({ checkInRef }) {
       )}
 
       {page > 1 && (
-        <div className="leather w-full max-w-[800px] aspect-[4/3] bg-amber-950 flex rounded-lg @container drop-shadow-xl">
+        <div className="h-full leather w-full max-w-[800px] bg-amber-950 flex rounded-lg @container drop-shadow-xl">
           {/* Left Page */}
           <div
             style={{
@@ -228,12 +165,13 @@ export default function GuestBook({ checkInRef }) {
             </div>
 
             {/* Click Box to go forward */}
+
             <div
               onClick={nextPage}
               className="absolute right-0 top-0 w-[20px] h-full cursor-pointer flex items-center group @min-[800px]:hidden"
             >
               <span className="block text-2xl opacity-40 transition-all group-hover:opacity-100">
-                »
+                {page === paginatedEntries?.length + 1 ? "" : " »"}
               </span>
             </div>
           </div>
@@ -266,7 +204,6 @@ export default function GuestBook({ checkInRef }) {
                     </div>
                   )
               )}
-
             {/* Form only on the last page */}
             {page === paginatedEntries.length && (
               <form
@@ -289,8 +226,8 @@ export default function GuestBook({ checkInRef }) {
                 />
               </form>
             )}
-
             {/* Click Box to go forward */}
+
             <div
               onClick={nextPage}
               className="absolute right-0 top-0 w-[20px] h-full cursor-pointer flex items-center group"
