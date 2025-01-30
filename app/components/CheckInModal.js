@@ -40,8 +40,19 @@ export default function CheckInModal({ checkInRef }) {
   const handleToggle = (item) => {
     if (isSmallScreen) {
       setToggleItem(item);
+
+      // If switching to tickets, close guestbook
+      if (item === "tickets") {
+        setIsExpanded(false);
+        setPage(1); // Reset page when switching back to tickets
+      }
     }
   };
+  // const handleToggle = (item) => {
+  //   if (isSmallScreen) {
+  //     setToggleItem(item);
+  //   }
+  // };
 
   return (
     <dialog
@@ -81,11 +92,13 @@ export default function CheckInModal({ checkInRef }) {
         } items-end justify-center w-full overflow-x-scroll scroll-hidden`}
       >
         {/* Ticket Component */}
-        {!isExpanded && (!isSmallScreen || toggleItem === "tickets") && (
-          <div className="bg-red-200 relative flex justify-center w-full transition-all duration-500 border-2 border-pink-500 min-w-[400px]">
-            <Ticket />
-          </div>
-        )}
+        {/* {!isExpanded && (!isSmallScreen || toggleItem === "tickets") && ( */}
+        {(!isExpanded || toggleItem === "tickets") &&
+          (!isSmallScreen || toggleItem === "tickets") && (
+            <div className="bg-red-200 relative flex justify-center w-full transition-all duration-500 border-2 border-pink-500 min-w-[400px]">
+              <Ticket />
+            </div>
+          )}
 
         {/* GuestBook Component */}
         {(isExpanded || !isSmallScreen || toggleItem === "guest-book") && (
