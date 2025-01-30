@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import data from "../../public/data/guestBook";
 
-export default function GuestBook({ isExpanded, setIsExpanded }) {
-  const [page, setPage] = useState(1);
+export default function GuestBook({ page, setPage, toggleBook }) {
   const [paginatedEntries, setPaginatedEntries] = useState();
   const [isSinglePage, setIsSinglePage] = useState(false);
   const [newEntry, setNewEntry] = useState({
@@ -18,14 +17,7 @@ export default function GuestBook({ isExpanded, setIsExpanded }) {
     userFlag: true,
   });
 
-  const toggleBook = () => {
-    setIsExpanded((prev) => {
-      const newState = !prev;
-      setPage(newState ? 2 : 1); // If expanded, set page to 2, else set to 1
-      return newState;
-    });
-  };
-
+  // Update guest's entry
   const handleInputChange = (e, field) => {
     const value = e.target.value;
     setNewEntry((prev) => ({ ...prev, [field]: value }));
@@ -39,6 +31,7 @@ export default function GuestBook({ isExpanded, setIsExpanded }) {
     });
   };
 
+  // Convert ALL entries into paginated data
   const paginateData = (data) => {
     const pageSize = 5;
     const result = [];
@@ -97,18 +90,18 @@ export default function GuestBook({ isExpanded, setIsExpanded }) {
     <div className="flex justify-center items-end h-full">
       {/* Cover */}
       {page === 1 && (
-        <div
+        <button
           onClick={toggleBook}
-          className="leather w-full max-w-[350px] h-[450px]  bg-amber-950 rounded-r-2xl shadow-2xl drop-shadow-xl"
+          className="cursor-pointer leather w-full max-w-[350px] h-[450px]  bg-amber-950 rounded-r-2xl shadow-2xl drop-shadow-xl"
         >
           <div className="p-8">
             <h1 className="text-white text-2xl font-bold">Guestbook</h1>
           </div>
-        </div>
+        </button>
       )}
 
       {page > 1 && (
-        <div className="leather w-full max-w-[800px]  bg-amber-950 flex rounded-lg @container drop-shadow-xl">
+        <div className="leather w-full max-w-[800px] bg-amber-950 flex rounded-lg @container drop-shadow-xl">
           {/* Left Page */}
           <div
             style={{
