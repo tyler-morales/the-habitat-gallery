@@ -81,16 +81,15 @@ export default function CheckInModal({ checkInRef }) {
         } items-end justify-end md:justify-center w-full min-h-[500px]  overflow-x-scroll scroll-hidden`}
       >
         {/* Ticket Component */}
-        {(!isExpanded || toggleItem === "tickets") &&
-          (!isSmallScreen || toggleItem === "tickets") && (
-            <div className="bg-red-200 relative flex justify-center w-full transition-all duration-500 border-2 border-pink-500 min-w-[300px] sm:min-w-[350px]">
-              <Ticket />
-            </div>
-          )}
+        {!isExpanded && (!isSmallScreen || toggleItem === "tickets") && (
+          <div className="bg-red-200 relative flex justify-center w-full transition-all duration-500 border-2 border-pink-500 min-w-[300px] sm:min-w-[350px]">
+            <Ticket />
+          </div>
+        )}
 
         {/* GuestBook Component */}
         {(isExpanded || !isSmallScreen || toggleItem === "guest-book") && (
-          <div className="z-50 transition-all duration-500 relative w-full border-2 border-blue-600 min-w-[400px]">
+          <div className="z-50 transition-all duration-500 relative w-full border-2 border-blue-600 sm:min-w-[350px]">
             <GuestBook
               page={page}
               setPage={setPage}
