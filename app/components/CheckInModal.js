@@ -17,7 +17,7 @@ export default function CheckInModal({ checkInRef }) {
   return (
     <dialog
       ref={checkInRef}
-      className="m-auto rounded-3xl w-[80vw] max-h-[90vh] h-[90vh] overflow-hidden"
+      className="m-auto rounded-3xl w-full md:w-[80vw] h-full md:h-[90vh] overflow-hidden"
     >
       {/* Close Button */}
       <button
@@ -53,7 +53,7 @@ export default function CheckInModal({ checkInRef }) {
             process.env.NEXT_PUBLIC_API_BASE_PATH || ""
           }/images/textures/wood.jpg')`,
         }}
-        className="w-full h-full flex justify-center gap-10"
+        className="w-full h-full flex justify-center"
       >
         {/* Plaque */}
         <div className="mt-4 relative h-min w-max p-4 bg-gradient-to-br from-orange-300 to-orange-500 border-2 border-orange-400 rounded-md shadow-sm">
