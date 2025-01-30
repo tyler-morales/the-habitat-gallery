@@ -26,5 +26,5 @@ code:1,1,1,1,1,1,1,.5
 TOTAL:7.5
 
 1/30/25
-code:
-TOTAL
+code:1,
+TOTAL:1

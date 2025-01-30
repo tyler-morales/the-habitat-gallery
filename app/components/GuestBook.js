@@ -59,8 +59,6 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
     return () => window.removeEventListener("resize", updateScreenSize);
   }, []);
 
-  console.log(page, paginatedEntries?.length, page === paginatedEntries?.length);
-
   const nextPage = () => {
     setPage((prev) => {
       const isLastPage = prev >= paginatedEntries.length + 1;
