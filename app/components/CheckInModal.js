@@ -54,19 +54,19 @@ export default function CheckInModal({ checkInRef }) {
 
       {/* Toggle buttons (only on small screens) */}
       {isSmallScreen && (
-        <div className="flex w-full gap-4 mb-4">
+        <div className="flex w-full gap-4 mb-4 px-2">
           <button
             onClick={() => handleToggle("tickets")}
-            className={`w-full p-2 ${
-              toggleItem === "tickets" ? "bg-blue-600 text-white" : "bg-blue-400"
+            className={`cursor-pointer w-full px-2 py-4 text-xl font-bold rounded-lg text-white ${
+              toggleItem === "tickets" ? "bg-blue-600" : "bg-blue-400"
             }`}
           >
             Ticket
           </button>
           <button
             onClick={() => handleToggle("guest-book")}
-            className={`w-full p-2 ${
-              toggleItem === "guest-book" ? "bg-blue-600 text-white" : "bg-blue-400"
+            className={`cursor-pointer w-full px-2 py-4 text-xl font-bold rounded-lg text-white ${
+              toggleItem === "guest-book" ? "bg-blue-600" : "bg-blue-400"
             }`}
           >
             Guest Book
