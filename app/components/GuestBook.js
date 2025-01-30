@@ -87,12 +87,12 @@ export default function GuestBook({ page, setPage, toggleBook }) {
   };
 
   return (
-    <div className="flex justify-center items-end h-full">
+    <div className="flex justify-center items-end">
       {/* Cover */}
       {page === 1 && (
         <button
           onClick={toggleBook}
-          className="cursor-pointer leather w-full max-w-[350px] h-[450px]  bg-amber-950 rounded-r-2xl shadow-2xl drop-shadow-xl"
+          className="cursor-pointer leather w-full max-w-[350px] h-[450px] bg-amber-950 rounded-r-2xl shadow-2xl drop-shadow-xl"
         >
           <div className="p-8">
             <h1 className="text-white text-2xl font-bold">Guestbook</h1>
@@ -101,7 +101,7 @@ export default function GuestBook({ page, setPage, toggleBook }) {
       )}
 
       {page > 1 && (
-        <div className="leather w-full max-w-[800px] bg-amber-950 flex rounded-lg @container drop-shadow-xl">
+        <div className="h-full leather w-full max-w-[800px] bg-amber-950 flex rounded-lg @container drop-shadow-xl">
           {/* Left Page */}
           <div
             style={{

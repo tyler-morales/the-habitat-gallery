@@ -17,31 +17,32 @@ export default function CheckInModal({ checkInRef }) {
   return (
     <dialog
       ref={checkInRef}
-      className="m-auto rounded-3xl w-full md:w-[80vw] h-full md:h-[90vh] overflow-hidden"
+      className="m-auto rounded-3xl md:w-[80vw] border-2 border-yellow-400 scroll-hidden"
     >
-      {/* Close Button */}
-      <button
-        onClick={() => checkInRef.current.close()}
-        className="p-2 text-gray-500 hover:text-gray-800 text-lg absolute top-0 right-2 transition-all cursor-pointer"
-      >
-        x
-      </button>
+      <div className="p-8">
+        <h2 className="font-bold text-3xl text-center">Welcome, To The Ticket Booth!!!</h2>
+      </div>
 
       {/* Main Content */}
       <div
-        className={`max-w-5xl m-auto gap-4 h-[80vh] overflow-hidden flex px-8 flex-col lg:flex-row transition-transform duration-500 ${
+        className={`m-auto border-2 max-w-5xl flex flex-col md:flex-row items-end justify-center w-full overflow-x-scroll scroll-hidden ${
+          // className={`m-auto border-2 max-w-5xl flex flex-col md:flex-row items-end justify-center w-full ${
+          // className={`max-w-5xl m-auto gap-4 h-[80vh] flex px-8 flex-col lg:flex-row transition-transform duration-500 ${
           isExpanded ? "-translate-x-[0%]" : ""
         }`}
       >
         {/* Ticket Component */}
         {!isExpanded && (
-          <div className="flex justify-center h-full items-end w-full transition-all duration-500">
+          <div className="bg-red-200 relative flex justify-center w-full transition-all duration-500 border-2 border-pink-500 min-w-[400px]">
             <Ticket />
           </div>
         )}
 
         {/* GuestBook Component */}
-        <div className={`z-50 transition-all duration-500 relative w-full`}>
+        <div
+          className={`z-50 transition-all duration-500 relative w-full  border-2 border-blue-600 min-w-[400px]`}
+          // className={`z-50 transition-all duration-500 relative w-full md:p-4 border-2 border-blue-600 min-w-[400px]`}
+        >
           <GuestBook page={page} setPage={setPage} toggleBook={toggleBook} />
         </div>
       </div>
@@ -56,7 +57,7 @@ export default function CheckInModal({ checkInRef }) {
         className="w-full h-full flex justify-center"
       >
         {/* Plaque */}
-        <div className="mt-4 relative h-min w-max p-4 bg-gradient-to-br from-orange-300 to-orange-500 border-2 border-orange-400 rounded-md shadow-sm">
+        <div className="my-4 relative h-min w-max p-4 bg-gradient-to-br from-orange-300 to-orange-500 border-2 border-orange-400 rounded-md shadow-sm">
           <h3 className="font-bold px-4 text-2xl text-center uppercase font-serif text-yellow-800 drop-shadow-[0_1px_0_rgba(255,255,255,0.8)] tracking-widest">
             Ticket Desk
           </h3>
@@ -76,6 +77,14 @@ export default function CheckInModal({ checkInRef }) {
           </div>
         </div>
       </div>
+
+      {/* Close Button */}
+      <button
+        onClick={() => checkInRef.current.close()}
+        className="p-2 text-gray-500 hover:text-gray-800 text-lg absolute top-0 right-2 transition-all cursor-pointer"
+      >
+        x
+      </button>
     </dialog>
   );
 }

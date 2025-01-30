@@ -54,7 +54,7 @@ const Ticket = () => {
           backgroundSize: "contain", // Ensure the image fits inside
           backgroundRepeat: "no-repeat",
         }}
-        className={`absolute w-full max-w-[350px] h-[350px] flex justify-center items-center ${
+        className={`bottom-0 absolute w-full max-w-[350px] h-[350px] flex justify-center  ${
           removePrinter ? "z-0" : "z-40 opacity-100 transition-opacity duration-500"
         }`}
       >
