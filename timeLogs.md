@@ -1,3 +1,4 @@
+-- NEW BRANCH: feature/check-in ---
 1/24/25
 planning and prep: 1
 code: .5
@@ -25,6 +26,12 @@ TOTAL: 6.75
 code:1,1,1,1,1,1,1,.5
 TOTAL:7.5
 
+-- NEW BRANCH: feature/hud ---
+
 1/30/25
-code:1,1,1,1,1,1,1
-TOTAL:7
+code:1,1,1,1,1,1,1,.15
+TOTAL:7.15
+
+1/31/25
+code:
+TOTAL
