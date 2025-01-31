@@ -78,7 +78,7 @@ export default function Home() {
     <main
       ref={scrollRef}
       onWheel={handleScroll}
-      className="bg-white h-screen flex flex-col overflow-x-scroll no-scrollbar max-h-100vh"
+      className="bg-white h-screen flex flex-col overflow-x-scroll no-scrollbar max-h-[100vh] scroll-hidden"
     >
       {/* 🚪 Rooms  */}
       <div className="flex w-[170vw] h-[80vh] flex-shrink-0">
@@ -104,11 +104,12 @@ export default function Home() {
 
       {/* HUD */}
       <div className="absolute bottom-4 right-4">
+        {/* <div className="absolute bottom-4 right-4"> */}
+        {/* <div className="flex justify-end absolute bottom-0 right-0"> */}
         <HUD />
       </div>
 
       {/* 🏁 Check-in Popover (Native Dialog) */}
-      {/* <GuestBook checkInRef={checkInRef} /> */}
       <CheckInModal checkInRef={checkInRef} />
     </main>
   );
