@@ -37,4 +37,8 @@ TOTAL:7.15
 
 1/31/25
 code:1.15
-TOTAL
+TOTAL:1.15
+
+2/1/25
+code:.75
+TOTAL:.75
