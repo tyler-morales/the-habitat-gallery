@@ -103,9 +103,7 @@ export default function Home() {
       <Character position={characterPosition} />
 
       {/* HUD */}
-      <div className="absolute bottom-4 right-4">
-        {/* <div className="absolute bottom-4 right-4"> */}
-        {/* <div className="flex justify-end absolute bottom-0 right-0"> */}
+      <div className="absolute bottom-8 right-8">
         <HUD />
       </div>
 
