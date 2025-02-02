@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 export default function HUD() {
   const toggleRef = useRef(null);
-  const [toggleItemBar, setToggleItemBar] = useState(true);
+  const [toggleItemBar, setToggleItemBar] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
   const [hasTicket, setHasTicket] = useState(false); // state to 'mimic' a user not having a ticket
 
