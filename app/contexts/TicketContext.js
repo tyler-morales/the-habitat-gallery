@@ -14,18 +14,28 @@ export const TicketProvider = ({ children }) => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const storedTicket = localStorage.getItem("userTicket");
+    const userTicket = localStorage.getItem("userTicket");
     const storedHasTicket = localStorage.getItem("storedTicket");
 
-    if (storedTicket) {
-      setUserTicket(JSON.parse(storedTicket));
+    if (userTicket) {
+      setUserTicket(JSON.parse(userTicket)); // set local storage to this ticket
     } else {
       generateTicket(); // If no ticket exists, generate one
     }
-    if (!storedHasTicket && hasTicket) {
-      localStorage.setItem("storedTicket", JSON.stringify(true));
-      setHasTicket(true);
+
+    // Load ticket from local storage
+    if (userTicket) {
+      setUserTicket(JSON.parse(userTicket));
+    } else {
+      generateTicket();
     }
+
+    // Update hasTicket state based on stored value
+    if (storedHasTicket) {
+      localStorage.setItem("storedTicket", JSON.stringify(true)); // Ensure storage consistency
+    }
+
+    setHasTicket(storedHasTicket);
   }, [hasTicket]);
 
   // ✅ Generates a new ticket if needed
@@ -35,9 +45,6 @@ export const TicketProvider = ({ children }) => {
       type: "Free",
       order_id: uuidv4(),
     };
-
-    localStorage.setItem("userTicket", JSON.stringify(newTicket));
-    setUserTicket(newTicket);
   };
 
   return (

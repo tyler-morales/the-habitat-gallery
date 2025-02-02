@@ -26,6 +26,7 @@ const Ticket = () => {
     hour12: true, // Change to true for 12-hour format
   });
 
+  // Print ticket animation and sets state
   const printTicket = async () => {
     setHasTicket(true);
     setTimeout(() => {

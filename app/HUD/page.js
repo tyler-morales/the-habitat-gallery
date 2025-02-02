@@ -14,6 +14,8 @@ export default function HUD() {
     setToggleItemBar(true);
   };
 
+  console.log("hud ticket", hasTicket);
+
   // Close when clicking outside or pressing Escape
   useEffect(() => {
     const handleClickOutside = (event) => {
