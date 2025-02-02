@@ -4,8 +4,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useTicket } from "../contexts/TicketContext";
 import { QRCodeSVG } from "qrcode.react";
+import domtoimage from "dom-to-image";
 
 export default function HUD() {
+  const ticketRef = useRef(null);
   const { userTicket, hasTicket, setHasTicket } = useTicket();
   const toggleRef = useRef(null);
   const [toggleItemBar, setToggleItemBar] = useState(true);
@@ -71,6 +73,23 @@ export default function HUD() {
     setIsPopupVisible(false);
   };
 
+  const saveTicketAsImage = () => {
+    if (!ticketRef.current) return console.error("❌ Ticket reference not found!");
+
+    domtoimage
+      .toPng(ticketRef.current, { bgcolor: "#ffffff" }) // Ensure background color
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.href = dataUrl;
+        link.download = `Habitat-Gallery-Ticket.png`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        console.log("✅ Image should be downloaded now!");
+      })
+      .catch((error) => console.error("❌ Error capturing image:", error));
+  };
+
   return (
     <>
       <div
@@ -112,7 +131,6 @@ export default function HUD() {
                     onFocus={() => setFocusedItem(index)}
                     onBlur={() => setFocusedItem(null)}
                     onClick={(e) => handleTicketToggle(e)} // Prevents focus from persisting after click
-                    // onClick={(e) => e.currentTarget.blur()} // Prevents focus from persisting after click
                   >
                     <span
                       className={`text-5xl md:text-7xl drop-shadow-lg transition-all ${
@@ -158,22 +176,27 @@ export default function HUD() {
             >
               {/* Close button */}
               <button
-                className="p-1 text-slate-900 hover:text-gray-800 s absolute left-2 top-2 transition-all bg-slate-100 rounded-full"
+                className="z-50 p-1 text-slate-900 hover:text-gray-800 s absolute left-2 top-2 transition-all bg-slate-100 rounded-full"
                 onClick={closeTicketPopup}
               >
                 🔴
               </button>
 
-              <div className="border-4 bg-slate-200 border-slate-900  rounded-lg p-10 pt-6 flex flex-col gap-6">
+              <div
+                style={{ perspective: "1000px" }}
+                className="border-4 bg-slate-200 border-slate-900  rounded-lg p-10 pt-6 flex flex-col gap-5"
+              >
                 {/* Title */}
                 <h3 className="font-bold uppercase text-3xl tracking-widest text-center">Ticket</h3>
 
                 {/* Ticket */}
                 <motion.div
-                  className="relative min-w-[250px] min-h-[300px]"
+                  className="relative min-w-[250px] min-h-[300px] mb-5"
                   initial={{ rotateX: 0, rotateY: 0 }}
+                  style={{ transformStyle: "preserve-3d" }}
                   animate={{
                     y: [0, 10, -10, 0],
+                    rotateY: [0, 20, 0, -20],
                     transition: {
                       repeat: Infinity,
                       repeatType: "reverse",
@@ -188,12 +211,10 @@ export default function HUD() {
                     transition: { duration: 0.2 },
                   }}
                 >
-                  {/* Rotating Card Container */}
-                  {/* <div className="h-full"> */}
-                  {/* Front Side */}
+                  {/* Front Side Ticket */}
                   <div
-                    className="inset-0 dots-bg grid rounded-lg p-4 shadow-md border border-gray-400"
-                    style={{ backfaceVisibility: "hidden" }}
+                    ref={ticketRef}
+                    className="inset-0 dots-bg grid rounded-lg p-4 border border-gray-400 shadow-lg shadow-sky-500 drop-shadow-lg"
                   >
                     <Image alt="Logo" src="/images/habitat.svg" width={100} height={100} />
                     <h2 className="font-bold text-lg mt-1">A Digital Gallery</h2>
@@ -230,27 +251,16 @@ export default function HUD() {
                     {/* QR Code */}
                     <div className="mt-4 flex flex-col items-center">
                       <QRCodeSVG value={userTicket.order_id} size={100} />
-                      <button className="cursor-pointer text-2xl text-slate-100 bg-blue-700 p-6 border-b-10 border-blue-800 hover:scale-105 focus:scale-105 active:border-b-6 rounded  block text-center mt-3">
-                        Save Your Ticket
-                      </button>
                     </div>
                   </div>
-
-                  {/* Back Side (Rotated 180°) */}
-                  {/* <div
-                      className="absolute inset-0 dots-bg grid place-items-center rounded-lg p-4 shadow-md border border-gray-400"
-                      style={{ transform: "rotateY(180deg)", backfaceVisibility: "hidden" }}
-                    >
-                      <Image
-                        alt="Logo"
-                        src="/images/habitat.svg"
-                        width={150}
-                        height={150}
-                        className="-rotate-90"
-                      />
-                    </div>
-                  </div> */}
                 </motion.div>
+
+                <button
+                  onClick={saveTicketAsImage}
+                  className="cursor-pointer text-2xl text-slate-100 bg-blue-700 p-6 border-b-10 border-blue-800 hover:scale-105 focus:scale-105 active:border-b-6 rounded  block text-center"
+                >
+                  Save Your Ticket
+                </button>
 
                 {/* Extra info */}
                 <div>
