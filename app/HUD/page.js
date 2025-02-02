@@ -61,10 +61,21 @@ export default function HUD() {
     };
   }, []);
 
-  const handleTicketToggle = (e) => {
-    console.log("clicked ticket");
-    setTicketPopUp(true);
-    setIsPopupVisible(true);
+  const handleTicketToggle = (e, item) => {
+    console.log("clicked ticket", item);
+
+    switch (item) {
+      case "Ticket":
+        setTicketPopUp(true); // value: what contnet to put in the popup
+        setIsPopupVisible(true); // boolean: popup visibile or not
+        break;
+      case "Map":
+        console.log(item);
+      case "Dragon":
+        console.log(item);
+      default:
+        break;
+    }
     e.currentTarget.blur();
   };
 
@@ -130,7 +141,7 @@ export default function HUD() {
                     className="cursor-pointer hover:translate-y-[-3px] md:hover:translate-y-[-5px] hover:scale-[102%] focus:translate-y-[-3px] md:focus:translate-y-[-5px] transition-all duration-200 ease-in-out bg-slate-100 border-b-6 border-slate-300 h-[70px] w-[70px] md:h-[100px] md:w-[100px] rounded-2xl flex items-center justify-center"
                     onFocus={() => setFocusedItem(index)}
                     onBlur={() => setFocusedItem(null)}
-                    onClick={(e) => handleTicketToggle(e)} // Prevents focus from persisting after click
+                    onClick={(e) => handleTicketToggle(e, item.label)} // Prevents focus from persisting after click
                   >
                     <span
                       className={`text-5xl md:text-7xl drop-shadow-lg transition-all ${
