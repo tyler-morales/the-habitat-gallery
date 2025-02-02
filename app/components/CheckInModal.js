@@ -1,12 +1,16 @@
 import { useState, useEffect } from "react";
 import GuestBook from "./GuestBook";
 import Ticket from "./Ticket";
+import { useTicket } from "../contexts/TicketContext";
 
 export default function CheckInModal({ checkInRef }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [toggleItem, setToggleItem] = useState("tickets");
   const [page, setPage] = useState(1);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const { userTicket } = useTicket();
+
+  console.log(userTicket);
 
   // Handle screen size change
   useEffect(() => {

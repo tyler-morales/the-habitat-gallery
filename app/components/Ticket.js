@@ -2,10 +2,29 @@
 import { useState } from "react";
 import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
+import { useTicket } from "../contexts/TicketContext";
 
 const Ticket = () => {
+  const { userTicket } = useTicket();
   const [removePrinter, setRemovePrinter] = useState(false);
   const controls = useAnimation(); // Animation controller
+
+  // Convert timestamp to Date object
+  const dateObj = new Date(userTicket?.date);
+
+  // Format Date (MM/DD/YY)
+  const formattedDate = dateObj.toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "2-digit",
+  });
+
+  // Format Time (hh:mm)
+  const formattedTime = dateObj.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true, // Change to true for 12-hour format
+  });
 
   const printTicket = async () => {
     setTimeout(() => {
@@ -84,22 +103,22 @@ const Ticket = () => {
             <div className="grid grid-cols-2 gap-4 mt-6">
               <div>
                 <h3 className="text-sm font-bold">Date</h3>
-                <h3 className="text-sm text-gray-600">1/28/25</h3>
+                <h3 className="text-sm text-gray-600">{formattedDate}</h3>
               </div>
 
               <div>
                 <h3 className="text-sm font-bold">Time</h3>
-                <h3 className="text-sm text-gray-600">10:37am</h3>
+                <h3 className="text-sm text-gray-600">{formattedTime}</h3>
               </div>
 
               <div>
                 <h3 className="text-sm font-bold">Type</h3>
-                <h3 className="text-sm text-gray-600">Guest</h3>
+                <h3 className="text-sm text-gray-600">{userTicket?.type}</h3>
               </div>
 
               <div>
                 <h3 className="text-sm font-bold">Order ID</h3>
-                <h3 className="text-sm text-gray-600">nafvdjva823</h3>
+                <h3 className="text-sm text-gray-600">{userTicket?.order_id.slice(0, 8)}...</h3>
               </div>
             </div>
             <div className="mt-4">
