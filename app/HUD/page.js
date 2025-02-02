@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useTicket } from "../contexts/TicketContext";
+import { QRCodeSVG } from "qrcode.react";
 
 export default function HUD() {
   const { userTicket, hasTicket, setHasTicket } = useTicket();
@@ -169,7 +170,7 @@ export default function HUD() {
 
                 {/* Ticket */}
                 <motion.div
-                  className="relative w-[250px] h-[300px]"
+                  className="relative min-w-[250px] min-h-[300px]"
                   initial={{ rotateX: 0, rotateY: 0 }}
                   animate={{
                     y: [0, 10, -10, 0],
@@ -188,47 +189,55 @@ export default function HUD() {
                   }}
                 >
                   {/* Rotating Card Container */}
-                  <div className="h-full">
-                    {/* Front Side */}
-                    <div
-                      className="absolute inset-0 dots-bg grid rounded-lg p-4 shadow-md border border-gray-400"
-                      style={{ backfaceVisibility: "hidden" }}
-                    >
-                      <Image alt="Logo" src="/images/habitat.svg" width={100} height={100} />
-                      <h2 className="font-bold text-lg mt-1">A Digital Gallery</h2>
+                  {/* <div className="h-full"> */}
+                  {/* Front Side */}
+                  <div
+                    className="inset-0 dots-bg grid rounded-lg p-4 shadow-md border border-gray-400"
+                    style={{ backfaceVisibility: "hidden" }}
+                  >
+                    <Image alt="Logo" src="/images/habitat.svg" width={100} height={100} />
+                    <h2 className="font-bold text-lg mt-1">A Digital Gallery</h2>
 
-                      <div className="grid grid-cols-2 gap-4 mt-6">
-                        <div>
-                          <h3 className="text-sm font-bold">Date</h3>
-                          <h3 className="text-sm text-gray-600">{formattedDate}</h3>
-                        </div>
-
-                        <div>
-                          <h3 className="text-sm font-bold">Time</h3>
-                          <h3 className="text-sm text-gray-600">{formattedTime}</h3>
-                        </div>
-
-                        <div>
-                          <h3 className="text-sm font-bold">Type</h3>
-                          <h3 className="text-sm text-gray-600">{userTicket?.type}</h3>
-                        </div>
-
-                        <div>
-                          <h3 className="text-sm font-bold">Order ID</h3>
-                          <h3 className="text-sm text-gray-600">
-                            {userTicket?.order_id.slice(0, 8)}...
-                          </h3>
-                        </div>
+                    <div className="grid grid-cols-2 gap-4 mt-6">
+                      <div>
+                        <h3 className="text-sm font-bold">Date</h3>
+                        <h3 className="text-sm text-gray-600">{formattedDate}</h3>
                       </div>
-                      <div className="mt-4">
-                        <h3 className="text-sm font-bold">Place</h3>
-                        <h3 className="text-sm text-gray-600">🌎 Chicago, IL </h3>
+
+                      <div>
+                        <h3 className="text-sm font-bold">Time</h3>
+                        <h3 className="text-sm text-gray-600">{formattedTime}</h3>
                       </div>
-                      <hr className="border-dashed border-slate-500 mt-6" />
+
+                      <div>
+                        <h3 className="text-sm font-bold">Type</h3>
+                        <h3 className="text-sm text-gray-600">{userTicket?.type}</h3>
+                      </div>
+
+                      <div>
+                        <h3 className="text-sm font-bold">Order ID</h3>
+                        <h3 className="text-sm text-gray-600">
+                          {userTicket?.order_id.slice(0, 8)}...
+                        </h3>
+                      </div>
                     </div>
+                    <div className="mt-4">
+                      <h3 className="text-sm font-bold">Place</h3>
+                      <h3 className="text-sm text-gray-600">🌎 Chicago, IL </h3>
+                    </div>
+                    <hr className="border-dashed border-slate-500 mt-6" />
 
-                    {/* Back Side (Rotated 180°) */}
-                    <div
+                    {/* QR Code */}
+                    <div className="mt-4 flex flex-col items-center">
+                      <QRCodeSVG value={userTicket.order_id} size={100} />
+                      <button className="cursor-pointer text-2xl text-slate-100 bg-blue-700 p-6 border-b-10 border-blue-800 hover:scale-105 focus:scale-105 active:border-b-6 rounded  block text-center mt-3">
+                        Save Your Ticket
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Back Side (Rotated 180°) */}
+                  {/* <div
                       className="absolute inset-0 dots-bg grid place-items-center rounded-lg p-4 shadow-md border border-gray-400"
                       style={{ transform: "rotateY(180deg)", backfaceVisibility: "hidden" }}
                     >
@@ -240,7 +249,7 @@ export default function HUD() {
                         className="-rotate-90"
                       />
                     </div>
-                  </div>
+                  </div> */}
                 </motion.div>
 
                 {/* Extra info */}

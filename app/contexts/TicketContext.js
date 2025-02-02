@@ -40,7 +40,7 @@ export const TicketProvider = ({ children }) => {
 
   // ✅ Generates a new ticket if needed
   const generateTicket = () => {
-    const newTicket = {
+    return {
       date: new Date().toISOString(),
       type: "Free",
       order_id: uuidv4(),
