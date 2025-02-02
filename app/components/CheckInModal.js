@@ -10,8 +10,6 @@ export default function CheckInModal({ checkInRef }) {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   const { userTicket } = useTicket();
 
-  console.log(userTicket);
-
   // Handle screen size change
   useEffect(() => {
     const handleResize = () => {

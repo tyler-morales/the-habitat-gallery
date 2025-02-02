@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useTicket } from "../contexts/TicketContext";
 
 const Ticket = () => {
-  const { userTicket } = useTicket();
+  const { userTicket, setHasTicket } = useTicket();
   const [removePrinter, setRemovePrinter] = useState(false);
   const controls = useAnimation(); // Animation controller
 
@@ -27,6 +27,7 @@ const Ticket = () => {
   });
 
   const printTicket = async () => {
+    setHasTicket(true);
     setTimeout(() => {
       setRemovePrinter(true);
     }, 7000);

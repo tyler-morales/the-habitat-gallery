@@ -1,11 +1,13 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
+import { useTicket } from "../contexts/TicketContext";
 
 export default function HUD() {
   const toggleRef = useRef(null);
   const [toggleItemBar, setToggleItemBar] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
-  const [hasTicket, setHasTicket] = useState(false); // state to 'mimic' a user not having a ticket
+  const { hasTicket } = useTicket();
+  // const [hasTicket, setHasTicket] = useState(false); // state to 'mimic' a user not having a ticket
 
   // Handle toggle when clicked, focused, or touched
   const handleToggle = () => {

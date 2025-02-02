@@ -9,19 +9,26 @@ const TicketContext = createContext();
 // Context Provider
 export const TicketProvider = ({ children }) => {
   const [userTicket, setUserTicket] = useState(null);
+  const [hasTicket, setHasTicket] = useState(false);
 
   useEffect(() => {
-    if (typeof window === "undefined") return; // Ensure we’re in the client
+    if (typeof window === "undefined") return;
 
     const storedTicket = localStorage.getItem("userTicket");
-    if (storedTicket) {
-      setUserTicket(JSON.parse(storedTicket)); // Load existing ticket
-    } else {
-      generateTicket(); // Generate a new one if none exists
-    }
-  }, []);
+    const storedHasTicket = localStorage.getItem("storedTicket");
 
-  // Generate and store a new ticket
+    if (storedTicket) {
+      setUserTicket(JSON.parse(storedTicket));
+    } else {
+      generateTicket(); // If no ticket exists, generate one
+    }
+    if (!storedHasTicket && hasTicket) {
+      localStorage.setItem("storedTicket", JSON.stringify(true));
+      setHasTicket(true);
+    }
+  }, [hasTicket]);
+
+  // ✅ Generates a new ticket if needed
   const generateTicket = () => {
     const newTicket = {
       date: new Date().toISOString(),
@@ -33,10 +40,11 @@ export const TicketProvider = ({ children }) => {
     setUserTicket(newTicket);
   };
 
-  return <TicketContext.Provider value={{ userTicket }}>{children}</TicketContext.Provider>;
+  return (
+    <TicketContext.Provider value={{ userTicket, hasTicket, setHasTicket }}>
+      {children}
+    </TicketContext.Provider>
+  );
 };
 
-// Custom Hook for accessing Ticket Context
-export const useTicket = () => {
-  return useContext(TicketContext);
-};
+export const useTicket = () => useContext(TicketContext);
