@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useTicket } from "../contexts/TicketContext";
 
 const Ticket = () => {
-  const { userTicket, setHasTicket } = useTicket();
+  const { userTicket, hasTicket, setHasTicket } = useTicket();
   const [removePrinter, setRemovePrinter] = useState(false);
   const controls = useAnimation(); // Animation controller
 
@@ -79,9 +79,17 @@ const Ticket = () => {
           removePrinter ? "z-0" : "z-40 opacity-100 transition-opacity duration-500"
         }`}
       >
-        <button onClick={printTicket} className="button bottom-4 absolute">
-          <div className="button__content">
-            <span className="button__text font-bold">Print Ticket</span>
+        <button
+          onClick={printTicket}
+          className={`px-4 py-2 rounded-md border-b-10 transition-all text-xl bottom-4 absolute ${
+            hasTicket
+              ? "cursor-not-allowed bg-gray-300 border-gray-400 border-b-[4px]"
+              : "cursor-pointer bg-green-800 border-green-900 focus:border-b-6 active:border-b-6 hover:scale-105"
+          }`}
+          disabled
+        >
+          <div className="">
+            <span className="font-bold text-white px-4 py-10">Print Ticket</span>
           </div>
         </button>
       </div>
