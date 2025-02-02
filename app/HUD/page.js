@@ -167,31 +167,26 @@ export default function HUD() {
           >
             {/* Popup */}
             <motion.div
-              className="bg-white rounded-lg shadow-lg max-w-5xl relative p-4 border-4 border-slate-200 drop-shadow-xl"
+              className="bg-white rounded-lg shadow-lg max-w-5xl relative p-4 border-4 border-slate-200 drop-shadow-xl w-full sm:w-auto"
               initial={{ y: "100vh", opacity: 0 }} // Start from below screen
               animate={{ y: "0", opacity: 1 }} // Drop in smoothly
               exit={{ y: "100vh", opacity: 0 }} // Exit upwards
               transition={{ type: "tween" }}
               onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
             >
-              {/* Close button */}
-              <button
-                className="z-50 p-1 text-slate-900 hover:text-gray-800 s absolute left-2 top-2 transition-all bg-slate-100 rounded-full"
-                onClick={closeTicketPopup}
-              >
-                🔴
-              </button>
-
               <div
                 style={{ perspective: "1000px" }}
-                className="border-4 bg-slate-200 border-slate-900  rounded-lg p-10 pt-6 flex flex-col gap-5"
+                className="border-4 bg-slate-200 border-blue-200 rounded-lg p-4 sm:p-10 sm:pt-6 flex flex-col gap-5"
               >
                 {/* Title */}
-                <h3 className="font-bold uppercase text-3xl tracking-widest text-center">Ticket</h3>
+                <h3 className="font-bold uppercase text-3xl tracking-widest text-center">
+                  Your Ticket
+                </h3>
 
                 {/* Ticket */}
                 <motion.div
-                  className="relative min-w-[250px] min-h-[300px] mb-5"
+                  ref={ticketRef}
+                  className="inset-0 dots-bg grid rounded-lg p-4 border border-gray-400 shadow-lg shadow-sky-500 drop-shadow-lg w-[250px] m-auto "
                   initial={{ rotateX: 0, rotateY: 0 }}
                   style={{ transformStyle: "preserve-3d" }}
                   animate={{
@@ -211,53 +206,48 @@ export default function HUD() {
                     transition: { duration: 0.2 },
                   }}
                 >
-                  {/* Front Side Ticket */}
-                  <div
-                    ref={ticketRef}
-                    className="inset-0 dots-bg grid rounded-lg p-4 border border-gray-400 shadow-lg shadow-sky-500 drop-shadow-lg"
-                  >
-                    <Image alt="Logo" src="/images/habitat.svg" width={100} height={100} />
-                    <h2 className="font-bold text-lg mt-1">A Digital Gallery</h2>
+                  <Image alt="Logo" src="/images/habitat.svg" width={100} height={100} />
+                  <h2 className="font-bold text-lg mt-1">A Digital Gallery</h2>
 
-                    <div className="grid grid-cols-2 gap-4 mt-6">
-                      <div>
-                        <h3 className="text-sm font-bold">Date</h3>
-                        <h3 className="text-sm text-gray-600">{formattedDate}</h3>
-                      </div>
-
-                      <div>
-                        <h3 className="text-sm font-bold">Time</h3>
-                        <h3 className="text-sm text-gray-600">{formattedTime}</h3>
-                      </div>
-
-                      <div>
-                        <h3 className="text-sm font-bold">Type</h3>
-                        <h3 className="text-sm text-gray-600">{userTicket?.type}</h3>
-                      </div>
-
-                      <div>
-                        <h3 className="text-sm font-bold">Order ID</h3>
-                        <h3 className="text-sm text-gray-600">
-                          {userTicket?.order_id.slice(0, 8)}...
-                        </h3>
-                      </div>
+                  <div className="grid grid-cols-2 gap-4 mt-6">
+                    <div>
+                      <h3 className="text-sm font-bold">Date</h3>
+                      <h3 className="text-sm text-gray-600">{formattedDate}</h3>
                     </div>
-                    <div className="mt-4">
-                      <h3 className="text-sm font-bold">Place</h3>
-                      <h3 className="text-sm text-gray-600">🌎 Chicago, IL </h3>
-                    </div>
-                    <hr className="border-dashed border-slate-500 mt-6" />
 
-                    {/* QR Code */}
-                    <div className="mt-4 flex flex-col items-center">
-                      <QRCodeSVG value={userTicket.order_id} size={100} />
+                    <div>
+                      <h3 className="text-sm font-bold">Time</h3>
+                      <h3 className="text-sm text-gray-600">{formattedTime}</h3>
+                    </div>
+
+                    <div>
+                      <h3 className="text-sm font-bold">Type</h3>
+                      <h3 className="text-sm text-gray-600">{userTicket?.type}</h3>
+                    </div>
+
+                    <div>
+                      <h3 className="text-sm font-bold">Order ID</h3>
+                      <h3 className="text-sm text-gray-600">
+                        {userTicket?.order_id.slice(0, 8)}...
+                      </h3>
                     </div>
                   </div>
+                  <div className="mt-4">
+                    <h3 className="text-sm font-bold">Place</h3>
+                    <h3 className="text-sm text-gray-600">🌎 Chicago, IL </h3>
+                  </div>
+                  <hr className="border-dashed border-slate-500 mt-6" />
+
+                  {/* QR Code */}
+                  <div className="mt-4 flex flex-col items-center">
+                    <QRCodeSVG value={userTicket.order_id} size={100} />
+                  </div>
                 </motion.div>
+                {/* </motion.div> */}
 
                 <button
                   onClick={saveTicketAsImage}
-                  className="cursor-pointer text-2xl text-slate-100 bg-blue-700 p-6 border-b-10 border-blue-800 hover:scale-105 focus:scale-105 active:border-b-6 rounded  block text-center"
+                  className="mt-6 cursor-pointer text-lg sm:text-2xl text-slate-100 bg-blue-700 p-2 sm:p-6 border-b-10 border-blue-800 hover:scale-105 focus:scale-105 active:border-b-6 rounded  block text-center"
                 >
                   Save Your Ticket
                 </button>
