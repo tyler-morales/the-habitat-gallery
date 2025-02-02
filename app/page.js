@@ -22,7 +22,6 @@ export default function Home() {
     let x = scrollRef.current.scrollLeft;
 
     if (x >= 115 && !hasCheckedIn) {
-      console.log("✅ User has reached the check-in desk!");
       setHasCheckedIn(true); // Prevent multiple pop-ups
 
       // Show the pop-up
