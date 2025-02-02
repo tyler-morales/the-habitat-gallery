@@ -7,6 +7,7 @@ import CheckInModal from "./components/CheckInModal";
 import Room1 from "./components/Room1";
 import Room2 from "./components/Room2";
 import GuestBook from "./components/GuestBook";
+import HUD from "./HUD/page";
 
 export default function Home() {
   const scrollRef = useRef(null);
@@ -77,7 +78,7 @@ export default function Home() {
     <main
       ref={scrollRef}
       onWheel={handleScroll}
-      className="bg-white h-screen flex flex-col overflow-x-scroll no-scrollbar max-h-100vh"
+      className="bg-white h-screen flex flex-col overflow-x-scroll no-scrollbar max-h-[100vh] scroll-hidden"
     >
       {/* 🚪 Rooms  */}
       <div className="flex w-[170vw] h-[80vh] flex-shrink-0">
@@ -101,8 +102,12 @@ export default function Home() {
       {/* 👨 Person */}
       <Character position={characterPosition} />
 
+      {/* HUD */}
+      <div className="absolute bottom-8 right-8">
+        <HUD />
+      </div>
+
       {/* 🏁 Check-in Popover (Native Dialog) */}
-      {/* <GuestBook checkInRef={checkInRef} /> */}
       <CheckInModal checkInRef={checkInRef} />
     </main>
   );

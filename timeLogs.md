@@ -16,6 +16,8 @@ plan: .66
 code: .33,1,1,1,1,1,.5
 TOTAL: 6.5
 
+-- NEW BRANCH: feature/check-in ---
+
 1/28/25
 plan: 1
 code:1,1,1,1,1,.75
@@ -25,6 +27,14 @@ TOTAL: 6.75
 code:1,1,1,1,1,1,1,.5
 TOTAL:7.5
 
+TOTAL BRANCH TIME: 16.25
+
 1/30/25
-code:1,1
-TOTAL:2
+code:1,1,1,1,1,1,1,.15
+TOTAL:7.15
+
+-- NEW BRANCH: feature/hud --- (5 from 1/30)
+
+1/31/25
+code:1.15
+TOTAL

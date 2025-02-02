@@ -17,12 +17,12 @@ bun dev
 ## TODO
 
 [ ] Create character
-[ ] Check-in
+[x] Check-in
 [ ] Add more decor to rooms
 [ ] Make Habitat frame an autoplay slideshow
 [x] Add a 3rd room
-[ ] Add a HUD forf settings, ticket (This is where the fun is)
-[ ] Ticket
+[ ] Add a HUD for settings, ticket (This is where the fun is)
+[x] Ticket
 [ ] Map
 [ ] Settings
 [ ] About
