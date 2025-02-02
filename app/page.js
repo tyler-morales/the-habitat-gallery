@@ -6,7 +6,6 @@ import EntryRoom from "./components/EntryRoom";
 import CheckInModal from "./components/CheckInModal";
 import Room1 from "./components/Room1";
 import Room2 from "./components/Room2";
-import GuestBook from "./components/GuestBook";
 import HUD from "./HUD/page";
 
 export default function Home() {
