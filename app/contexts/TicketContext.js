@@ -8,8 +8,8 @@ const TicketContext = createContext();
 
 // Context Provider
 export const TicketProvider = ({ children }) => {
-  const [userTicket, setUserTicket] = useState(null);
-  const [hasTicket, setHasTicket] = useState(false);
+  const [userTicket, setUserTicket] = useState(null); // ticket ** OBJ **
+  const [hasTicket, setHasTicket] = useState(false); // user "bought" ticket at Ticket Desk ** BOOLEAN VALUE **
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -30,8 +30,8 @@ export const TicketProvider = ({ children }) => {
       generateTicket();
     }
 
-    // Update hasTicket state based on stored value
-    if (storedHasTicket) {
+    // Set has ticket to true if a user "bought" a ticket
+    if (hasTicket) {
       localStorage.setItem("storedTicket", JSON.stringify(true)); // Ensure storage consistency
     }
 
@@ -40,11 +40,14 @@ export const TicketProvider = ({ children }) => {
 
   // ✅ Generates a new ticket if needed
   const generateTicket = () => {
-    return {
+    const newTicket = {
       date: new Date().toISOString(),
       type: "Free",
       order_id: uuidv4(),
     };
+
+    setUserTicket(newTicket);
+    localStorage.setItem("userTicket", JSON.stringify(newTicket)); // Ensure storage consistency
   };
 
   return (

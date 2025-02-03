@@ -86,7 +86,7 @@ const Ticket = () => {
               ? "cursor-not-allowed bg-gray-300 border-gray-400 border-b-[4px]"
               : "cursor-pointer bg-green-800 border-green-900 focus:border-b-6 active:border-b-6 hover:scale-105"
           }`}
-          disabled
+          disabled={Boolean(hasTicket)} // ✅ Ensures it's a boolean
         >
           <div className="">
             <span className="font-bold text-white px-4 py-10">Print Ticket</span>

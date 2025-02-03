@@ -10,7 +10,7 @@ export default function HUD() {
   const ticketRef = useRef(null);
   const { userTicket, hasTicket, setHasTicket } = useTicket();
   const toggleRef = useRef(null);
-  const [toggleItemBar, setToggleItemBar] = useState(true);
+  const [toggleItemBar, setToggleItemBar] = useState(false);
   const [focusedItem, setFocusedItem] = useState(null);
 
   const [ticketPopup, setTicketPopUp] = useState(false);
@@ -62,17 +62,15 @@ export default function HUD() {
   }, []);
 
   const handleTicketToggle = (e, item) => {
-    console.log("clicked ticket", item);
-
     switch (item) {
       case "Ticket":
         setTicketPopUp(true); // value: what contnet to put in the popup
         setIsPopupVisible(true); // boolean: popup visibile or not
         break;
       case "Map":
-        console.log(item);
+      // console.log(item);
       case "Dragon":
-        console.log(item);
+      // console.log(item);
       default:
         break;
     }
@@ -96,7 +94,6 @@ export default function HUD() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        console.log("✅ Image should be downloaded now!");
       })
       .catch((error) => console.error("❌ Error capturing image:", error));
   };
