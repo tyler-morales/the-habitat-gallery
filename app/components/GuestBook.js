@@ -94,15 +94,8 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
   const nextPage = () => {
     setPage((prev) => {
       const isLastPage = prev >= paginatedEntries.length + 1;
-
       if (isLastPage) return prev; // Prevent going beyond the last page
-      // If on the first page, move forward by 1
-      // if (prev === 1) return prev + 1;
-      console.log("single", isSinglePage);
-
-      // Move forward by 1 if single-page mode is active, otherwise by 2
-      return isSinglePage ? prev + 1 : prev + 2;
-      // return isSinglePage ? prev + 1 : prev + 2;
+      return isSinglePage ? prev + 1 : prev + 2; // Move forward by 1 if single-page mode is active, otherwise by 2
     });
   };
 
