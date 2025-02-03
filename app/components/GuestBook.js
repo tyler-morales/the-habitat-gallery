@@ -15,6 +15,15 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
     userFlag: true,
   });
 
+  useEffect(() => {
+    const updateScreenSize = () => {
+      setIsSinglePage(window.innerWidth < 800);
+    };
+    updateScreenSize();
+    window.addEventListener("resize", updateScreenSize);
+    return () => window.removeEventListener("resize", updateScreenSize);
+  }, []);
+
   // ✅ Load existing guest book entry from ticket (if exists)
   useEffect(() => {
     if (userTicket?.guestBookEntry) {
@@ -89,9 +98,11 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
       if (isLastPage) return prev; // Prevent going beyond the last page
       // If on the first page, move forward by 1
       // if (prev === 1) return prev + 1;
+      console.log("single", isSinglePage);
 
       // Move forward by 1 if single-page mode is active, otherwise by 2
       return isSinglePage ? prev + 1 : prev + 2;
+      // return isSinglePage ? prev + 1 : prev + 2;
     });
   };
 
