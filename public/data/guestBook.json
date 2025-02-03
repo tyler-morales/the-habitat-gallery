@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1",
+    "name": "Alice",
+    "message": "Loved the exhibit! 🎨",
+    "timestamp": "2025-02-01T12:00:00Z"
+  },
+  {
+    "id": "2",
+    "name": "Bob",
+    "message": "A truly inspiring space. Thank you!",
+    "timestamp": "2025-02-02T14:30:00Z"
+  }
+]

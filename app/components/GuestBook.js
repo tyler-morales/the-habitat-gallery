@@ -1,11 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import data from "../../public/data/guestBook";
+// import data from "../../public/data/guestBook";
 
 export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) {
   const [paginatedEntries, setPaginatedEntries] = useState();
   const [isSinglePage, setIsSinglePage] = useState(false);
+  const [userEntry, setUserEntry] = useState(null);
   const [newEntry, setNewEntry] = useState({
     date: new Date().toLocaleDateString("en-US", {
       year: "numeric",
@@ -17,21 +18,44 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
     userFlag: true,
   });
 
-  // Update guest's entry
-  const handleInputChange = (e, field) => {
-    const value = e.target.value;
-    setNewEntry((prev) => ({ ...prev, [field]: value }));
+  // ✅ Load existing entry from localStorage on first load
+  useEffect(() => {
+    fetch("/data/guestBook.json") // Load guestbook entries
+      .then((res) => res.json())
+      .then((data) => {
+        const storedEntry = JSON.parse(localStorage.getItem("guestBookEntry"));
 
-    setPaginatedEntries((prevPaginated) => {
-      return prevPaginated.map((page, pageIndex) =>
-        pageIndex === prevPaginated.length - 1
-          ? [...page.slice(0, -1), { ...page[page.length - 1], [field]: value }]
-          : page
-      );
-    });
+        if (storedEntry) {
+          setUserEntry(storedEntry);
+          setNewEntry(storedEntry);
+        }
+
+        // Ensure user's stored entry is included in the guestbook
+        const allEntries = storedEntry ? [...data, storedEntry] : data;
+        setPaginatedEntries(paginateData(allEntries));
+      })
+      .catch((err) => console.error("Error loading guestbook:", err));
+  }, []);
+
+  // ✅ Debounced save to Local Storage (only saves valid input)
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      if (newEntry.name.trim() && newEntry.message.trim()) {
+        localStorage.setItem("guestBookEntry", JSON.stringify(newEntry));
+        setUserEntry(newEntry);
+        setPaginatedEntries((prev) => paginateData([...prev.flat(), newEntry])); // Update UI
+      }
+    }, 2000); // Wait 500ms before saving
+
+    return () => clearTimeout(delay); // Clear timeout if user types again
+  }, [newEntry]);
+
+  // ✅ Prevent saving empty name or message
+  const handleInputChange = (e, field) => {
+    setNewEntry((prev) => ({ ...prev, [field]: e.target.value }));
   };
 
-  // Convert ALL entries into paginated data
+  // ✅ Ensure new entry is always on the last page
   const paginateData = (data) => {
     const pageSize = 5;
     const result = [];
@@ -39,25 +63,13 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
       result.push(data.slice(i, i + pageSize));
     }
 
-    // Ensure form is on the last page, respecting `pageSize`
-    if (result.length > 0 && result[result.length - 1].length < pageSize) {
-      result[result.length - 1].push(newEntry);
-    } else {
+    // Ensure the user's entry is always on the last page
+    if (!result[result.length - 1]?.includes(newEntry)) {
       result.push([newEntry]);
     }
 
     return result;
   };
-
-  useEffect(() => {
-    setPaginatedEntries(paginateData(data));
-    const updateScreenSize = () => {
-      setIsSinglePage(window.innerWidth < 800);
-    };
-    updateScreenSize();
-    window.addEventListener("resize", updateScreenSize);
-    return () => window.removeEventListener("resize", updateScreenSize);
-  }, []);
 
   const nextPage = () => {
     setPage((prev) => {
@@ -143,14 +155,14 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
                   placeholder="Your Name"
                   value={newEntry.name}
                   onChange={(e) => handleInputChange(e, "name")}
-                  className="font-bold block w-full"
+                  className="font-bold block w-full text-2xl"
                 />
                 <textarea
                   type="text"
                   placeholder="Message"
                   value={newEntry.message}
                   onChange={(e) => handleInputChange(e, "message")}
-                  className="text-sm w-full"
+                  className="text-lg w-full"
                 />
               </form>
             )}
