@@ -21,7 +21,7 @@ bun dev
 [ ] Add more decor to rooms
 [ ] Make Habitat frame an autoplay slideshow
 [x] Add a 3rd room
-[ ] Add a HUD for settings, ticket (This is where the fun is)
+[x] Add a HUD for settings, ticket (This is where the fun is)
 [x] Ticket
 [ ] Map
 [ ] Settings

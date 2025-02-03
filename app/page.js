@@ -6,7 +6,6 @@ import EntryRoom from "./components/EntryRoom";
 import CheckInModal from "./components/CheckInModal";
 import Room1 from "./components/Room1";
 import Room2 from "./components/Room2";
-import GuestBook from "./components/GuestBook";
 import HUD from "./HUD/page";
 
 export default function Home() {
@@ -22,7 +21,6 @@ export default function Home() {
     let x = scrollRef.current.scrollLeft;
 
     if (x >= 115 && !hasCheckedIn) {
-      console.log("✅ User has reached the check-in desk!");
       setHasCheckedIn(true); // Prevent multiple pop-ups
 
       // Show the pop-up

@@ -104,6 +104,7 @@ dialog {
   background: url(https://i.imgur.com/IMjKmwu.jpg) #6b3a0d;
 }
 
+/* FONTS */
 .nanum-pen-script-regular {
   font-family: "Nanum Pen Script", serif;
   font-weight: 400;
@@ -121,7 +122,6 @@ dialog {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15), 5px 14px 20px rgba(0, 0, 0, 0.15);
   transition: all 0.1s ease-in-out;
   margin: auto;
-  /* width: 100%; */
   margin-left: 10px;
   margin-right: 10px;
 }
