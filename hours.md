@@ -32,3 +32,8 @@ Total: 7.4h
 2/1/25 - Coding: 0.25h  
 2/2/25 - Coding:5
 Total: 5.25h
+
+## Branch: feature/
+
+2/2/25 - Planning: .25, Coding: .5
+TOTAL: .75
