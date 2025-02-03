@@ -255,7 +255,7 @@ export default function HUD() {
 
                 <button
                   onClick={saveTicketAsImage}
-                  className="mt-6 cursor-pointer text-lg sm:text-2xl text-slate-100 bg-blue-700 p-2 sm:p-6 border-b-10 border-blue-800 hover:scale-105 focus:scale-105 active:border-b-6 rounded  block text-center"
+                  className="mt-6 cursor-pointer text-lg sm:text-2xl text-slate-100 bg-blue-700 p-2 sm:p-6 border-b-10 border-blue-800 hover:scale-105 focus:scale-105 active:border-b-6 rounded  block text-center transition-all"
                 >
                   Save Your Ticket
                 </button>
