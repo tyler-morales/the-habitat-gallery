@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useTicket } from "../contexts/TicketContext";
+import { v4 as uuidv4 } from "uuid";
 
 export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) {
   const [paginatedEntries, setPaginatedEntries] = useState();
@@ -9,6 +10,7 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
   const [isSinglePage, setIsSinglePage] = useState(false);
   const [userEntry, setUserEntry] = useState(null);
   const [newEntry, setNewEntry] = useState({
+    id: uuidv4(),
     date: new Date().toISOString(),
     name: "",
     message: "",
