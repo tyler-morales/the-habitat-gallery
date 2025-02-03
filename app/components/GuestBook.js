@@ -1,22 +1,26 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-// import data from "../../public/data/guestBook";
+import { useTicket } from "../contexts/TicketContext";
 
 export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) {
   const [paginatedEntries, setPaginatedEntries] = useState();
+  const { userTicket, updateGuestBookEntry } = useTicket();
   const [isSinglePage, setIsSinglePage] = useState(false);
   const [userEntry, setUserEntry] = useState(null);
   const [newEntry, setNewEntry] = useState({
-    date: new Date().toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }),
+    date: new Date().toISOString(),
     name: "",
     message: "",
     userFlag: true,
   });
+
+  // ✅ Load existing guest book entry from ticket (if exists)
+  useEffect(() => {
+    if (userTicket?.guestBookEntry) {
+      setNewEntry(userTicket.guestBookEntry);
+    }
+  }, []);
 
   // ✅ Load existing entry from localStorage on first load
   useEffect(() => {
@@ -50,9 +54,16 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
     return () => clearTimeout(delay); // Clear timeout if user types again
   }, [newEntry]);
 
-  // ✅ Prevent saving empty name or message
+  // ✅ Handle input changes and update ticket
   const handleInputChange = (e, field) => {
-    setNewEntry((prev) => ({ ...prev, [field]: e.target.value }));
+    const updatedEntry = { ...newEntry, [field]: e.target.value };
+    setNewEntry(updatedEntry);
+
+    // Only save if entry has a name and message
+    if (updatedEntry.name.trim() && updatedEntry.message.trim()) {
+      localStorage.setItem("guestBookEntry", JSON.stringify(updatedEntry));
+      updateGuestBookEntry(updatedEntry); // ⬅️ Update Ticket Context
+    }
   };
 
   // ✅ Ensure new entry is always on the last page
@@ -101,6 +112,19 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
     });
   };
 
+  // Format Date (MM/DD/YY)
+  const formatDate = (date) => {
+    const dateObj = new Date(date); // Convert to Date object
+
+    const newDate = dateObj.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+
+    return newDate;
+  };
+
   return (
     <div className="flex justify-center items-end">
       {/* Cover */}
@@ -125,7 +149,7 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
               }/images/textures/paper.png)`,
               boxShadow: "5px 3px 5px black",
             }}
-            className="scroll-hidden overflow-y-scroll relative rounded-l-lg @max-[800px]:rounded-r-lg bg-yellow-100 w-full my-6 p-2 @max-[800px]:p-6 ml-6 @max-[800px]:ml-4 @max-[800px]:mr-6 drop-shadow-[10px_0px_5px_rgba(50,50,50,.1)] z-10"
+            className="min-h-[500px] scroll-hidden overflow-y-scroll relative rounded-l-lg @max-[800px]:rounded-r-lg bg-yellow-100 w-full my-6 p-2 @max-[800px]:p-6 ml-6 @max-[800px]:ml-4 @max-[800px]:mr-6 drop-shadow-[10px_0px_5px_rgba(50,50,50,.1)] z-10"
           >
             <h2 className="text-lg font-bold text-center">Page {page - 1}</h2>
             {page > 1 &&
@@ -138,7 +162,7 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
                         index + 1 == paginatedEntries[page - 2].length ? "border-b-0" : "border-b-2"
                       } border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto`}
                     >
-                      <p className="text-lg">{entry.date}</p>
+                      <p className="text-lg">{formatDate(entry.timestamp)}</p>
                       <p className="text-2xl font-bold">{entry.name}</p>
                       <p className="text-lg">{entry.message}</p>
                     </div>
@@ -149,20 +173,20 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
               <form
                 className={`nanum-pen-script-regular border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto`}
               >
-                <p className="text-sm">{newEntry.date}</p>
+                <p className="text-lg">{newEntry.date}</p>
                 <input
                   type="text"
                   placeholder="Your Name"
                   value={newEntry.name}
                   onChange={(e) => handleInputChange(e, "name")}
-                  className="font-bold block w-full text-2xl"
+                  className="font-bold text-xl w-full p-2 rounded-md focus:ring-2 focus:ring-orange-300 focus:outline-none"
                 />
                 <textarea
                   type="text"
                   placeholder="Message"
                   value={newEntry.message}
                   onChange={(e) => handleInputChange(e, "message")}
-                  className="text-lg w-full"
+                  className="text-xl w-full p-2 rounded-md focus:ring-2 focus:ring-orange-300 focus:outline-none"
                 />
               </form>
             )}
@@ -221,25 +245,24 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
               <form
                 className={`nanum-pen-script-regular border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto`}
               >
-                <p className="text-lg">{newEntry.date}</p>
+                <p className="text-lg">{formatDate(newEntry.date)}</p>
                 <input
                   type="text"
                   placeholder="Your Name"
                   value={newEntry.name}
                   onChange={(e) => handleInputChange(e, "name")}
-                  className="font-bold block w-full text-2xl"
+                  className="font-bold px-2 rounded-md block w-full text-2xl focus:ring-2 focus:ring-orange-300 focus:outline-none"
                 />
                 <textarea
                   type="text"
                   placeholder="Message"
                   value={newEntry.message}
                   onChange={(e) => handleInputChange(e, "message")}
-                  className="text-lg w-full"
+                  className="text-xl w-full p-2 rounded-md focus:ring-2 focus:ring-orange-300 focus:outline-none"
                 />
               </form>
             )}
             {/* Click Box to go forward */}
-
             <div
               onClick={nextPage}
               className="absolute right-0 top-0 w-[20px] h-full cursor-pointer flex items-center group"

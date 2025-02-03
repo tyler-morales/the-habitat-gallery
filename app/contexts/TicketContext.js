@@ -44,14 +44,24 @@ export const TicketProvider = ({ children }) => {
       date: new Date().toISOString(),
       type: "Free",
       order_id: uuidv4(),
+      guestBookEntry: null, // ⬅️ Add guestbook entry field
     };
 
     setUserTicket(newTicket);
     localStorage.setItem("userTicket", JSON.stringify(newTicket)); // Ensure storage consistency
   };
 
+  // ✅ Update Guest Book Entry in the ticket
+  const updateGuestBookEntry = (entry) => {
+    setUserTicket((prev) => {
+      const updatedTicket = { ...prev, guestBookEntry: entry };
+      localStorage.setItem("userTicket", JSON.stringify(updatedTicket)); // Persist update
+      return updatedTicket;
+    });
+  };
+
   return (
-    <TicketContext.Provider value={{ userTicket, hasTicket, setHasTicket }}>
+    <TicketContext.Provider value={{ userTicket, hasTicket, setHasTicket, updateGuestBookEntry }}>
       {children}
     </TicketContext.Provider>
   );
