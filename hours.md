@@ -37,3 +37,8 @@ Total: 5.25h
 
 2/2/25 - Planning: .25, Coding: .5
 TOTAL: .75
+
+## Branch bug/
+
+2/3/25 - Planning: , Coding:
+TOTAL:

@@ -26,3 +26,8 @@ bun dev
 [ ] Map
 [ ] Settings
 [ ] About
+
+## Bugs 🪲
+
+[ ] ticket can be clicked even if user has not printed a ticket (HUD, onClick ticket)
+[ ] Guest book layout is too complex (use Multi-Column Layout)
