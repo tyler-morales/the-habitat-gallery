@@ -17,14 +17,14 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
     userFlag: true,
   });
 
-  useEffect(() => {
-    const updateScreenSize = () => {
-      setIsSinglePage(window.innerWidth < 800);
-    };
-    updateScreenSize();
-    window.addEventListener("resize", updateScreenSize);
-    return () => window.removeEventListener("resize", updateScreenSize);
-  }, []);
+  // useEffect(() => {
+  //   const updateScreenSize = () => {
+  //     setIsSinglePage(window.innerWidth < 800);
+  //   };
+  //   updateScreenSize();
+  //   window.addEventListener("resize", updateScreenSize);
+  //   return () => window.removeEventListener("resize", updateScreenSize);
+  // }, []);
 
   // ✅ Load existing guest book entry from ticket (if exists)
   useEffect(() => {
@@ -47,7 +47,8 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
 
         // Ensure user's stored entry is included in the guestbook
         const allEntries = storedEntry ? [...data, storedEntry] : data;
-        setPaginatedEntries(paginateData(allEntries));
+        setPaginatedEntries(allEntries);
+        // setPaginatedEntries(paginateData(allEntries));
       })
       .catch((err) => console.error("Error loading guestbook:", err));
   }, []);
@@ -94,11 +95,12 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
   };
 
   const nextPage = () => {
-    setPage((prev) => {
-      const isLastPage = prev >= paginatedEntries.length + 1;
-      if (isLastPage) return prev; // Prevent going beyond the last page
-      return isSinglePage ? prev + 1 : prev + 2; // Move forward by 1 if single-page mode is active, otherwise by 2
-    });
+    setPage(page + 1);
+    // setPage((prev) => {
+    //   const isLastPage = prev >= paginatedEntries.length + 1;
+    //   if (isLastPage) return prev; // Prevent going beyond the last page
+    //   return isSinglePage ? prev + 1 : prev + 2; // Move forward by 1 if single-page mode is active, otherwise by 2
+    // });
   };
 
   const prevPage = () => {
@@ -146,8 +148,8 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
       )}
 
       {page > 1 && (
-        <div className="h-full leather w-full max-w-[800px] bg-amber-950 flex rounded-lg @container drop-shadow-xl">
-          {/* Left Page */}
+        <div className="h-full leather w-full max-w-[800px] bg-amber-950 flex rounded-lg drop-shadow-xl">
+          {/* Guestbook Entries Container */}
           <div
             style={{
               backgroundImage: `url(${
@@ -155,126 +157,46 @@ export default function GuestBook({ page, setPage, toggleBook, setIsExpanded }) 
               }/images/textures/paper.png)`,
               boxShadow: "5px 3px 5px black",
             }}
-            className="min-h-[500px] scroll-hidden overflow-y-scroll relative rounded-l-lg @max-[800px]:rounded-r-lg bg-yellow-100 w-full my-6 p-2 @max-[800px]:p-6 ml-6 @max-[800px]:ml-4 @max-[800px]:mr-6 drop-shadow-[10px_0px_5px_rgba(50,50,50,.1)] z-10"
+            className="relative rounded-lg bg-yellow-100 w-full m-6 p-6 drop-shadow-[10px_0px_5px_rgba(50,50,50,.1)]"
           >
             <h2 className="text-lg font-bold text-center">Page {page - 1}</h2>
-            {page > 1 &&
-              paginatedEntries[page - 2]?.map(
-                (entry, index) =>
-                  !entry.userFlag && (
-                    <div
-                      key={index}
-                      className={`nanum-pen-script-regular ${
-                        index + 1 == paginatedEntries[page - 2].length ? "border-b-0" : "border-b-2"
-                      } border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto`}
-                    >
-                      <p className="text-lg">{formatDate(entry.timestamp)}</p>
-                      <p className="text-2xl font-bold">{entry.name}</p>
-                      <p className="text-lg">{entry.message}</p>
-                    </div>
-                  )
-              )}
-            {/* Form only on the last page */}
-            {page - 1 === paginatedEntries.length && (
-              <form
-                className={`nanum-pen-script-regular border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto`}
-              >
-                <p className="text-lg">{newEntry.date}</p>
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  value={newEntry.name}
-                  onChange={(e) => handleInputChange(e, "name")}
-                  className="font-bold text-xl w-full p-2 rounded-md focus:ring-2 focus:ring-orange-300 focus:outline-none"
-                />
-                <textarea
-                  type="text"
-                  placeholder="Message"
-                  value={newEntry.message}
-                  onChange={(e) => handleInputChange(e, "message")}
-                  className="text-xl w-full p-2 rounded-md focus:ring-2 focus:ring-orange-300 focus:outline-none"
-                />
-              </form>
-            )}
+
+            {/* Entries with Multi-Column Layout */}
+            <div className="h-[300px] sm:h-[550px] guestbook-entries">
+              {page > 1 &&
+                // paginatedEntries[page - 2]?.map(
+                paginatedEntries?.map(
+                  (entry, index) =>
+                    !entry.userFlag && (
+                      <div
+                        key={index}
+                        className="nanum-pen-script-regular border-orange-300 p-2 w-full break-inside-avoid border-b-3 border-dashed "
+                      >
+                        <p className="text-lg">{formatDate(entry.timestamp)}</p>
+                        <p className="text-2xl font-bold">{entry.name}</p>
+                        <p className="text-lg leading-5">{entry.message}</p>
+                      </div>
+                    )
+                )}
+            </div>
+
             {/* Click Box to go back */}
             <div
               onClick={prevPage}
               className="absolute left-0 top-0 w-[20px] h-full cursor-pointer flex items-center group"
             >
-              <span className="block text-2xl opacity-40 transition-all group-hover:opacity-100 @min-w-[1000px]:ml-2 ml-1">
+              <span className="block text-2xl opacity-40 transition-all group-hover:opacity-100 ml-2">
                 «
               </span>
             </div>
 
             {/* Click Box to go forward */}
-
             <div
               onClick={nextPage}
               className="absolute right-0 top-0 w-[20px] h-full cursor-pointer flex items-center group @min-[800px]:hidden"
             >
               <span className="block text-2xl opacity-40 transition-all group-hover:opacity-100">
                 {page === paginatedEntries?.length + 1 ? "" : " »"}
-              </span>
-            </div>
-          </div>
-
-          {/* Right Page */}
-          <div
-            style={{
-              backgroundImage: `url(${
-                process.env.NEXT_PUBLIC_API_BASE_PATH || ""
-              }/images/textures/paper.png)`,
-              boxShadow: "5px 3px 5px black",
-            }}
-            className="scroll-hidden overflow-y-scroll relative rounded-r-lg bg-yellow-100 w-full my-6 p-2 mr-6 @max-[800px]:hidden"
-          >
-            <h2 className="text-lg font-bold text-center">Page {page}</h2>
-            {page > 1 &&
-              page - 1 != paginatedEntries.length &&
-              paginatedEntries[page - 1]?.map(
-                (entry, index) =>
-                  !entry.userFlag && (
-                    <div
-                      key={index}
-                      className={`nanum-pen-script-regular ${
-                        index + 1 == paginatedEntries[page - 2].length ? "border-b-0" : "border-b-2"
-                      } border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto`}
-                    >
-                      <p className="text-lg">{entry.date}</p>
-                      <p className="font-bold text-2xl">{entry.name}</p>
-                      <p className="text-lg">{entry.message}</p>
-                    </div>
-                  )
-              )}
-            {/* Form only on the last page */}
-            {page === paginatedEntries.length && (
-              <form
-                className={`nanum-pen-script-regular border-orange-950 p-2 m-3 mx-2 w-[90%] @min-[800px]:m-auto`}
-              >
-                <p className="text-lg">{formatDate(newEntry.date)}</p>
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  value={newEntry.name}
-                  onChange={(e) => handleInputChange(e, "name")}
-                  className="font-bold px-2 rounded-md block w-full text-2xl focus:ring-2 focus:ring-orange-300 focus:outline-none"
-                />
-                <textarea
-                  type="text"
-                  placeholder="Message"
-                  value={newEntry.message}
-                  onChange={(e) => handleInputChange(e, "message")}
-                  className="text-xl w-full p-2 rounded-md focus:ring-2 focus:ring-orange-300 focus:outline-none"
-                />
-              </form>
-            )}
-            {/* Click Box to go forward */}
-            <div
-              onClick={nextPage}
-              className="absolute right-0 top-0 w-[20px] h-full cursor-pointer flex items-center group"
-            >
-              <span className="block text-2xl opacity-40 transition-all group-hover:opacity-100">
-                »
               </span>
             </div>
           </div>

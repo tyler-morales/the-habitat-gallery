@@ -12,15 +12,33 @@
     "timestamp": "2025-02-02T14:30:00Z"
   },
   {
-    "id": "1",
-    "name": "Alice",
-    "message": "Loved the exhibit! 🎨",
-    "timestamp": "2025-02-01T12:00:00Z"
+    "id": "3",
+    "name": "Charlie",
+    "message": "Such a unique and thought-provoking experience! ✨",
+    "timestamp": "2025-02-03T10:15:00Z"
   },
   {
-    "id": "2",
-    "name": "Bob",
-    "message": "A truly inspiring space. Thank you!",
-    "timestamp": "2025-02-02T14:30:00Z"
+    "id": "4",
+    "name": "Danielle",
+    "message": "I absolutely loved the atmosphere. Can't wait to visit again!",
+    "timestamp": "2025-02-04T16:45:00Z"
+  },
+  {
+    "id": "5",
+    "name": "Ethan",
+    "message": "The artwork really spoke to me. Well done! 👏",
+    "timestamp": "2025-02-05T09:00:00Z"
+  },
+  {
+    "id": "6",
+    "name": "Fiona",
+    "message": "A beautiful blend of creativity and emotion. I’m inspired!",
+    "timestamp": "2025-02-06T13:25:00Z"
+  },
+  {
+    "id": "7",
+    "name": "Gabriel",
+    "message": "Incredible attention to detail. So much depth in every piece!",
+    "timestamp": "2025-02-07T18:50:00Z"
   }
 ]

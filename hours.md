@@ -33,7 +33,7 @@ Total: 7.4h
 2/2/25 - Coding:5
 Total: 5.25h
 
-## Branch: feature/
+## Branch: feature/guest-book-entries
 
 2/2/25 - Planning: .25, Coding: .5
 TOTAL: .75

@@ -163,3 +163,16 @@ dialog {
   box-shadow: 0.1em 0.1em 0.1em rgba(0, 0, 0, 0.2), 0 0 0 0.05em rgba(0, 0, 0, 0.4),
     -0.025em -0.05em 0.025em rgba(255, 255, 255, 0.8) inset;
 }
+
+.guestbook-entries {
+  container-type: inline-size;
+  column-width: 300px;
+  column-gap: 2.5rem; /* Adjust spacing */
+  column-rule: 3px solid #4403034f; /* Example accent color */
+}
+
+@media (max-width: 800px) {
+  .guestbook-entries {
+    column-width: 100%; /* Single column on small screens */
+  }
+}
